@@ -1,0 +1,58 @@
+package youcode.aftas.domain;
+
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import youcode.aftas.enums.IdentityDocumentType;
+
+import java.util.Date;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Entity
+public class Member {
+    @Id @GeneratedValue
+
+    private long id;
+
+    @NotNull(message = "name can not be null")
+    @Size(min = 3, max = 20, message = "name must be between 3 and 20 characters")
+    private String name;
+
+    @NotNull(message = "Family name can not be null")
+    @Size(min = 3, max = 20, message = "Family name must be between 3 and 20 characters")
+    private String familyName;
+
+    @PastOrPresent(message = "Access date must be in the past or present")
+    @Temporal(TemporalType.DATE)
+    @Size(min = 3, max = 20, message = "Access date must be between 3 and 20 characters")
+    private Date accessDate;
+
+    @NotNull(message = "Nationality can not be null")
+    private String nationality;
+
+    @Enumerated(EnumType.STRING)
+    private IdentityDocumentType identityDocumentType;
+
+    @NotNull(message = "Identity number can not be null")
+    @Size(min = 3, max = 20, message = "Identity number must be between 3 and 20 characters")
+    @Column(unique = true)
+    private String identityNumber;
+
+    @OneToMany(mappedBy = "member")
+    private List<Ranking> rankings;
+
+
+
+
+
+
+}
