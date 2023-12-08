@@ -22,8 +22,8 @@ public class Level {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotNull(message = "Level can not be null")
-    private Integer level;
+    @NotNull(message = "Shooting Level can not be null")
+    private Integer shootingLevel;
 
     @Size(min = 4, max = 20, message = "Description must be between 7 and 20 characters")
     private String description;

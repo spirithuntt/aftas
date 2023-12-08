@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.Pattern;
 
 import java.sql.Time;
 import java.util.Date;
@@ -24,6 +25,8 @@ public class Competition {
 
     @NotNull(message = "Code can not be null")
     @Size(min = 1, max = 20, message = "Code must be between 3 and 20 characters")
+    //ex :  Imsouane: pattern: ims-22-12-23 (ims-yy-mm-dd)
+    @Pattern(regexp = "[a-z]{3}-[0-9]{2}-[0-9]{2}-[0-9]{2}", message = "Code must be like ims-22-12-23")
     private String Code;
 
     private Date date;
