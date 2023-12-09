@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 import youcode.aftas.repository.MemberRepository;
 
 @Repository
-public class MemberRepositoryImpl implements MemberRepository {
+public class MemberRepositoryImpl{
 
 
 }

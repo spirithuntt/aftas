@@ -6,5 +6,10 @@ import youcode.aftas.domain.Member;
 import java.util.List;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
-    public List<Member> findByName(String name);
+    //L’interface admin doit permettre la recherche d’un adhérent par numéro, nom, ou prénom.
+     List<Member> findByName(String name);
+
+     List<Member> findByFamilyName(String familyName);
+
+     List<Member> findByIdentityNumber(String identityNumber);
 }
