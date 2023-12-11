@@ -20,6 +20,8 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Integer number;
+
     private String name;
 
     private String familyName;

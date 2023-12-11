@@ -24,17 +24,17 @@ public class RankingServiceImpl implements RankingService {
     }
 
     @Override
-    public List<Ranking> getByMember(Member member) {
+    public List<Ranking> getByMember(String member) {
         return null;
     }
 
     @Override
-    public List<Ranking> getByCompetition(Competition competition) {
+    public List<Ranking> getByCompetition(String competition) {
         return null;
     }
 
     @Override
-    public Ranking getByMemberAndCompetition(Member member, Competition competition) {
+    public Ranking getByMemberAndCompetition(String member, String competition) {
         return null;
     }
 

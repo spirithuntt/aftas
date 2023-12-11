@@ -16,11 +16,11 @@ public interface RankingService {
 
     Ranking getById(Long id);
 
-    List<Ranking> getByMember(Member member);
+    List<Ranking> getByMember(String member);
 
-    List<Ranking> getByCompetition(Competition competition);
+    List<Ranking> getByCompetition(String competition);
 
-    Ranking getByMemberAndCompetition(Member member, Competition competition);
+    Ranking getByMemberAndCompetition(String member, String competition);
 
     Ranking update(Ranking ranking, Long id);
 
