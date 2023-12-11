@@ -1,19 +1,17 @@
 package youcode.aftas.service.Impl;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import youcode.aftas.service.MemberService;
 import youcode.aftas.domain.Member;
 import youcode.aftas.repository.MemberRepository;
 import java.util.List;
-@Service
+@Component
+@RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
-
-    public MemberServiceImpl(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
-    }
-
     @Override
     public Member getMemberById(Long id) {
         return memberRepository.findById(id).orElse(null);

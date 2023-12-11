@@ -2,11 +2,8 @@ package youcode.aftas.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import youcode.aftas.domain.Fish;
+import youcode.aftas.domain.Hunting;
 
 @Repository
-public interface FishRepository extends JpaRepository<Fish, Long> {
-    Boolean existsByName(String name);
-
-
+public interface HuntingRepository extends JpaRepository<Hunting, Long>{
 }

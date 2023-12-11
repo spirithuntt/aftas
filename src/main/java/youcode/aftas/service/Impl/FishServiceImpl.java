@@ -1,19 +1,25 @@
 package youcode.aftas.service.Impl;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import youcode.aftas.domain.Fish;
 import youcode.aftas.repository.FishRepository;
+import youcode.aftas.service.FishService;
 
-@Service
-public class FishServiceImpl {
+@Component
+@RequiredArgsConstructor
+public class FishServiceImpl implements FishService {
     private final FishRepository fishRepository;
+    public void addFish(String name, Double averageWeight) {
+        if (fishRepository.existsByName(name)) {
+            System.out.println("Fish already exists");
+        } else {
 
-    public FishServiceImpl(FishRepository fishRepository) {
-        this.fishRepository = fishRepository;
+        }
     }
 
-    //À chaque niveau de tir est associé un nombre de points: plus le niveau est élevé plus le nombre
-    // de points est important (doit être vérifié à l’insertion des niveaux de tir).
+
 
 
 }

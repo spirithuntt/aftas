@@ -25,11 +25,12 @@ public class Fish {
     private String name;
 
     @NotNull(message = "Average weight can not be null")
-    private double averageWeight;
+    private Double averageWeight;
 
     @OneToMany(mappedBy = "fish")
     private List<Hunting> huntings;
 
     @ManyToOne
     private Level level;
+
 }

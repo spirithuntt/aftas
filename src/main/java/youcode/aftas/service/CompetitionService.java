@@ -1,5 +1,8 @@
 package youcode.aftas.service;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public interface CompetitionService {
     String createCompetitionName(String location, String date);
 

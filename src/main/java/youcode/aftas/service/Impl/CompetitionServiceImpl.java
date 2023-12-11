@@ -1,20 +1,18 @@
 package youcode.aftas.service.Impl;
 
-import org.springframework.stereotype.Service;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import youcode.aftas.repository.CompetitionRepository;
 import youcode.aftas.service.CompetitionService;
 
-@Service
+@Component
+@RequiredArgsConstructor
 public class CompetitionServiceImpl implements CompetitionService {
     private final CompetitionRepository competitionRepository;
-
-    public CompetitionServiceImpl(CompetitionRepository competitionRepository) {
-        this.competitionRepository = competitionRepository;
-    }
     @Override
     public String createCompetitionName(String location, String date) {
-        String competitionName = location.substring(0, 3) + date;
-        return competitionName;
+        return location.substring(0, 3) + date;
     }
 
     @Override
