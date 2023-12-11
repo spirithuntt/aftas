@@ -3,7 +3,6 @@ package com.example.aftas.dto;
 import com.example.aftas.domain.Competition;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
-import org.aspectj.bridge.IMessage;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
