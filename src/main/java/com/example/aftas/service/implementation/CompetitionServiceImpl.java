@@ -22,7 +22,7 @@ public class CompetitionServiceImpl implements CompetitionService {
     }
 
     @Override
-    public Competition update(Competition competition) {
+    public Competition update(Competition competition, Long id) {
         return null;
     }
 

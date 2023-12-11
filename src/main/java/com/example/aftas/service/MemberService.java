@@ -14,7 +14,7 @@ public interface MemberService {
 
     Member getById(Long id);
 
-    Member update(Member member);
+    Member update(Member member, Long id);
 
     void delete(Long id);
 

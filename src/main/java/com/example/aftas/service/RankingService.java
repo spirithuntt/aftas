@@ -22,7 +22,7 @@ public interface RankingService {
 
     Ranking getByMemberAndCompetition(Member member, Competition competition);
 
-    Ranking update(Ranking ranking);
+    Ranking update(Ranking ranking, Long id);
 
     void delete(Long id);
 

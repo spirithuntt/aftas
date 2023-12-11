@@ -18,13 +18,13 @@ public class Hunting {
     private Long id;
 
     @ManyToOne
-    private Fish fish_id;
+    private Fish fish;
 
     @ManyToOne
-    private Member member_id;
+    private Member member;
 
     @ManyToOne
-    private Competition competition_id;
+    private Competition competition;
 
     private Integer numberOfFish;
 

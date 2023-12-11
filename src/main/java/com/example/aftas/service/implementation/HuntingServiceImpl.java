@@ -25,7 +25,16 @@ public class HuntingServiceImpl implements HuntingService {
     }
 
     @Override
-    public Hunting update(Hunting hunting) {
+    public List<Hunting> getByCompetition(String competition){ return null;}
+
+    @Override
+    public List<Hunting> getByMember(String member){ return null;}
+
+    @Override
+    public List<Hunting> getByCompetitionAndMember(String competition, String member){ return null;}
+
+    @Override
+    public Hunting update(Hunting hunting, Long id) {
         return null;
     }
 

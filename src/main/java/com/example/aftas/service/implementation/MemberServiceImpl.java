@@ -22,7 +22,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Member update(Member member) {
+    public Member update(Member member, Long id) {
         return null;
     }
 

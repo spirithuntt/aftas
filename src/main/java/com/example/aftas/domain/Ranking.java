@@ -22,9 +22,9 @@ public class Ranking {
     private Integer score;
 
     @ManyToOne
-    private Member member_id;
+    private Member member;
 
     @ManyToOne
-    private Competition competition_id;
+    private Competition competition;
 
 }

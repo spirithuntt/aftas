@@ -14,7 +14,7 @@ public interface LevelService {
 
     Level getById(Long id);
 
-    Level update(Level level);
+    Level update(Level level, Long id);
 
     void delete(Long id);
 

@@ -17,6 +17,8 @@ public class Level {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Integer code;
+
     private String description;
 
     private Integer points;

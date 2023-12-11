@@ -39,7 +39,7 @@ public class RankingServiceImpl implements RankingService {
     }
 
     @Override
-    public Ranking update(Ranking ranking) {
+    public Ranking update(Ranking ranking, Long id) {
         return null;
     }
 

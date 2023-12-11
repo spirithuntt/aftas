@@ -15,11 +15,11 @@ public interface FishService {
 
     Fish getByName(String name);
 
-    List<Fish> getByLevel(Level level);
+    List<Fish> getByLevel(Integer code);
 
     Fish getById(Long id);
 
-    Fish update(Fish fish);
+    Fish update(Fish fish, Long id);
 
     void delete(Long id);
 

@@ -22,6 +22,6 @@ public class Fish {
     private Double averageWeight;
 
     @ManyToOne
-    private Level level_id;
+    private Level level;
 
 }

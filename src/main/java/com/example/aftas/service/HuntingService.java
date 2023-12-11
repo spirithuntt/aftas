@@ -17,7 +17,13 @@ public interface HuntingService {
 
     Hunting getById(Long id);
 
-    Hunting update(Hunting hunting);
+    List<Hunting> getByCompetition(String competition);
+
+    List<Hunting> getByMember(String member);
+
+    List<Hunting> getByCompetitionAndMember(String competition, String member);
+
+    Hunting update(Hunting hunting, Long id);
 
     void checkIfFishAlreadyHunted(Member member, Competition competition, Fish fish);
 

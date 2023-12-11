@@ -22,7 +22,7 @@ public class LevelServiceImpl implements LevelService {
     }
 
     @Override
-    public Level update(Level level) {
+    public Level update(Level level, Long id) {
         return null;
     }
 

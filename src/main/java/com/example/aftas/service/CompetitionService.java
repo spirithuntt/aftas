@@ -16,7 +16,7 @@ public interface CompetitionService {
 
     Competition getById(Long id);
 
-    Competition update(Competition competition);
+    Competition update(Competition competition, Long id);
 
     void delete(Long id);
 

@@ -23,7 +23,7 @@ public class FishServiceImpl implements FishService {
     }
 
     @Override
-    public List<Fish> getByLevel(Level level) {
+    public List<Fish> getByLevel(Integer code) {
         return null;
     }
 
@@ -33,7 +33,7 @@ public class FishServiceImpl implements FishService {
     }
 
     @Override
-    public Fish update(Fish fish) {
+    public Fish update(Fish fish, Long id) {
         return null;
     }
 
