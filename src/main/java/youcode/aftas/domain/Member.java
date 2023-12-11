@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 import youcode.aftas.enums.IdentityDocumentType;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor

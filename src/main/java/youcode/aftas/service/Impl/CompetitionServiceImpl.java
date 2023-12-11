@@ -1,8 +1,10 @@
 package youcode.aftas.service.Impl;
 
+import org.springframework.stereotype.Service;
 import youcode.aftas.repository.CompetitionRepository;
 import youcode.aftas.service.CompetitionService;
 
+@Service
 public class CompetitionServiceImpl implements CompetitionService {
     private final CompetitionRepository competitionRepository;
 
