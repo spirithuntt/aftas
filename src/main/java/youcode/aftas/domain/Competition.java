@@ -43,7 +43,7 @@ public class Competition {
     private String location;
 
     @NotNull(message = "Amount can not be null")
-    private Integer amount;
+    private Double amount;
 
     @OneToMany(mappedBy = "competition")
     private List<Ranking> rankings;
