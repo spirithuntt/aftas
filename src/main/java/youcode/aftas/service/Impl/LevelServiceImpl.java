@@ -11,10 +11,14 @@ import youcode.aftas.service.LevelService;
 @RequiredArgsConstructor
 public class LevelServiceImpl implements LevelService {
     private final LevelRepository levelRepository;
-
+    @Override
     public void addLevel(Integer shootingLevel, String Description, Integer points) {
-        if (levelRepository.existsByPointsGreaterThanEqual(points)) {
-            System.out.println("Level already exists");
+        if (levelRepository.existsByShootingLevel(shootingLevel) && levelRepository.existsByPoints(points)) {
+            throw new RuntimeException("Level already exists");
+        } else if (levelRepository.existsByShootingLevel(shootingLevel) && levelRepository.existsByPointsGreaterThanEqual(points)) {
+            throw new RuntimeException("Points should be higher than the previous level");
+        } else if (levelRepository.existsByShootingLevel(shootingLevel) && levelRepository.existsByPointsLessThanEqual(points)) {
+            throw new RuntimeException("Points should be lower than the previous level");
         } else {
             Level level = new Level();
             level.setShootingLevel(shootingLevel);

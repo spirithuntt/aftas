@@ -22,9 +22,18 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.save(member);
     }
     @Override
-    public List<Member> searchMember(String name) {
+    public List<Member> searchMemberByName(String name) {
         return memberRepository.findByName(name);
     }
+    @Override
+    public List<Member> searchMemberByFamilyName(String familyName) {
+        return memberRepository.findByFamilyName(familyName);
+    }
+    @Override
+    public List<Member> searchMemberByIdentityNumber(String identityNumber) {
+        return memberRepository.findByIdentityNumber(identityNumber);
+    }
+
     @Override
     public Member updateMember(Member member, Long id) {
         Member existingMember = getMemberById(id);

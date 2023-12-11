@@ -13,5 +13,12 @@ public interface LevelRepository extends JpaRepository<Level, Long>{
 
     boolean existsByPointsGreaterThanEqual(int points);
 
+    boolean existsByPointsLessThanEqual(int points);
+
+    boolean existsByPoints(int points);
+
+
+    boolean existsByShootingLevel(int shootingLevel);
+
 
 }
