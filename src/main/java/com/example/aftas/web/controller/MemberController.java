@@ -44,6 +44,13 @@ public class MemberController {
         else return ResponseMessage.ok("Success", member);
     }
 
+    @GetMapping("/search/{searchParam}")
+    public ResponseEntity getMemberByNameOrFamilyNameOrNumber(@PathVariable String searchParam){
+        List<Member> members = memberService.getByNameOrFamilyNameOrNumber(searchParam);
+        if(members.isEmpty()) return ResponseMessage.notFound("No member was found");
+        else return ResponseMessage.ok("Success", members);
+    }
+
     @PostMapping
     public ResponseEntity save(@RequestBody Member member){
         Member member1 = memberService.save(member);

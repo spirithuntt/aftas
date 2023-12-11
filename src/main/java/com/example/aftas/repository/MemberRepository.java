@@ -13,4 +13,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Member getMemberByIdentityNumber(String identityNumber);
 
+    List<Member> getMemberByNumber(Integer number);
+
+    List<Member> getMemberByNameOrFamilyName(String name, String familyName);
+
 }

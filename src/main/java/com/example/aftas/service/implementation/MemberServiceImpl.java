@@ -27,9 +27,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void delete(Long id) {
-
-    }
+    public void delete(Long id) {}
 
     @Override
     public List<Member> getByName(String name) {
@@ -40,4 +38,7 @@ public class MemberServiceImpl implements MemberService {
     public Member getByIdentityNumber(String identityNumber) {
         return null;
     }
+
+    public List<Member> getByNameOrFamilyNameOrNumber(String searchParam){ return null; }
+
 }
