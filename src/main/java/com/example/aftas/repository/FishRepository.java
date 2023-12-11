@@ -2,22 +2,16 @@ package com.example.aftas.repository;
 
 import com.example.aftas.domain.Fish;
 import com.example.aftas.domain.Level;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface FishRepository {
+public interface FishRepository extends JpaRepository<Fish, Long> {
 
-    Fish save(Fish fish);
+    Fish getFishByName(String name);
 
-    List<Fish> getAll();
+    List<Fish> getFishByLevel(Level level);
 
-    Fish getByNameFish(String name);
+    Fish getFishById(Long id);
 
-    List<Fish> getByLevelFish(Level level);
-
-    Fish getById(Long id);
-
-    Fish update(Fish fish);
-
-    void delete(Long id);
 }

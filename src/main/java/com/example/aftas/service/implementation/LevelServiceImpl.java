@@ -22,6 +22,9 @@ public class LevelServiceImpl implements LevelService {
     }
 
     @Override
+    public Level getByCode(Integer code){ return null; }
+
+    @Override
     public Level update(Level level, Long id) {
         return null;
     }

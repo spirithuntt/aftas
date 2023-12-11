@@ -45,7 +45,7 @@ public class HuntingController {
     }
 
     @GetMapping("/competition_and_member/{competition}/{member}")
-    public ResponseEntity getHuntingByCompetition(@PathVariable String competition, @PathVariable String member){
+    public ResponseEntity getHuntingByCompetitionAndMember(@PathVariable String competition, @PathVariable String member){
         List<Hunting> hunting = huntingService.getByCompetitionAndMember(competition, member);
         if(hunting == null) return ResponseMessage.notFound("Hunting not found");
         else return ResponseMessage.ok("Success", hunting);

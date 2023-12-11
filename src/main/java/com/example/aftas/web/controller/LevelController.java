@@ -30,6 +30,13 @@ public class LevelController {
         else return ResponseMessage.ok("Success", level);
     }
 
+    @GetMapping("/code/{code}")
+    public ResponseEntity getLevelByCode(@PathVariable Integer code){
+        Level level = levelService.getByCode(code);
+        if(level == null) return ResponseMessage.notFound("Level not found");
+        else return ResponseMessage.ok("Success", level);
+    }
+
     @PostMapping
     public ResponseEntity save(@RequestBody Level level){
         Level level1 = levelService.save(level);

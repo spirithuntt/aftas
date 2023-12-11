@@ -30,6 +30,13 @@ public class CompetitionController {
         else return ResponseMessage.ok("Success", competition);
     }
 
+    @GetMapping("/code/{code}")
+    public ResponseEntity getCompetitionByCode(@PathVariable String code){
+        Competition competition = competitionService.getByCode(code);
+        if(competition == null) return ResponseMessage.notFound("Competition not found");
+        else return ResponseMessage.ok("Success", competition);
+    }
+
     @PostMapping
     public ResponseEntity save(@RequestBody Competition competition){
         Competition competition1 = competitionService.save(competition);

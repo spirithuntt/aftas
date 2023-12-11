@@ -1,20 +1,14 @@
 package com.example.aftas.repository;
 
 import com.example.aftas.domain.Competition;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface CompetitionRepository {
+public interface CompetitionRepository extends JpaRepository<Competition, Long> {
 
-    Competition save(Competition competition);
+    Competition getCompetitionById(Long id);
 
-    List<Competition> getAll();
-
-    Competition getById(Long id);
-
-    Competition update(Competition competition);
-
-    void delete(Long id);
 }

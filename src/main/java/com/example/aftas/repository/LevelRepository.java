@@ -1,19 +1,14 @@
 package com.example.aftas.repository;
 
 import com.example.aftas.domain.Level;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface LevelRepository {
+public interface LevelRepository extends JpaRepository<Level, Long> {
 
-    Level save(Level level);
+    Level getLevelById(Long id);
 
-    List<Level> getAll();
-
-    Level getById(Long id);
-
-    Level update(Level level);
-
-    void delete(Long id);
+    Level getLevelByCode(Integer code);
 
 }

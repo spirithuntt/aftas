@@ -1,23 +1,16 @@
 package com.example.aftas.repository;
 
 import com.example.aftas.domain.Member;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface MemberRepository {
+public interface MemberRepository extends JpaRepository<Member, Long> {
 
-    Member save(Member member);
+    Member getMemberById(Long id);
 
-    List<Member> getAll();
+    List<Member> getMemberByName(String name);
 
-    Member getById(Long id);
-
-    Member update(Member member);
-
-    void delete(Long id);
-
-    List<Member> getByNameMembers(String name);
-
-    Member getByIdentityNumberMember(String identityNumber);
+    Member getMemberByIdentityNumber(String identityNumber);
 
 }

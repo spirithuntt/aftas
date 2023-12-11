@@ -17,6 +17,9 @@ public class CompetitionServiceImpl implements CompetitionService {
     }
 
     @Override
+    public Competition getByCode(String code){ return null;}
+
+    @Override
     public Competition getById(Long id) {
         return null;
     }

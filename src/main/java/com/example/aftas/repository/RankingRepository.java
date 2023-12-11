@@ -3,25 +3,18 @@ package com.example.aftas.repository;
 import com.example.aftas.domain.Competition;
 import com.example.aftas.domain.Member;
 import com.example.aftas.domain.Ranking;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface RankingRepository {
+public interface RankingRepository extends JpaRepository<Ranking, Long> {
 
-    Ranking save(Ranking ranking);
+    Ranking getRankingById(Long id);
 
-    List<Ranking> getAll();
+    List<Ranking> getRankingByMember(Member member);
 
-    Ranking getById(Long id);
+    List<Ranking> getRankingByCompetition(Competition competition);
 
-    List<Ranking> getByMemberRankings(Member member);
-
-    List<Ranking> getByCompetitionRankings(Competition competition);
-
-    Ranking getByMemberAndCompetitionRanking(Member member, Competition competition);
-
-    Ranking update(Ranking ranking);
-
-    void delete(Long id);
+    Ranking getRankingByMemberAndCompetition(Member member, Competition competition);
 
 }

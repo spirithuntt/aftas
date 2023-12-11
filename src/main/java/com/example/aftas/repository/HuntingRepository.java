@@ -4,19 +4,18 @@ import com.example.aftas.domain.Competition;
 import com.example.aftas.domain.Fish;
 import com.example.aftas.domain.Hunting;
 import com.example.aftas.domain.Member;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface HuntingRepository {
+public interface HuntingRepository extends JpaRepository<Hunting, Long> {
 
-    Hunting save(Hunting hunting);
+    Hunting getHuntingsById(Long id);
 
-    List<Hunting> getAll();
+    List<Hunting> getHuntingsByCompetition(Competition competition);
 
-    Hunting getById(Long id);
+    List<Hunting> getHuntingsByMember(Member member);
 
-    Hunting update(Hunting hunting);
-
-    void delete(Long id);
+    List<Hunting> getHuntingsByCompetitionAndMember(Competition competition, Member member);
 
 }
