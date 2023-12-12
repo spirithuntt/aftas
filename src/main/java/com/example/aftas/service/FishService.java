@@ -1,6 +1,7 @@
 package com.example.aftas.service;
 
-import com.example.aftas.domain.Fish;
+import com.example.aftas.dto.requests.FishRequestDTO;
+import com.example.aftas.dto.responses.FishResponseDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -8,17 +9,17 @@ import java.util.List;
 @Component
 public interface FishService {
 
-    Fish save(Fish fish);
+    FishResponseDTO save(FishRequestDTO fish);
 
-    List<Fish> getAll();
+    List<FishResponseDTO> getAll();
 
-    Fish getByName(String name);
+    FishResponseDTO getByName(String name);
 
-    List<Fish> getByLevel(Integer code);
+    List<FishResponseDTO> getByLevel(Integer code);
 
-    Fish getById(Long id);
+    FishResponseDTO getById(Long id);
 
-    Fish update(Fish fish, Long id);
+    FishResponseDTO update(FishRequestDTO fish, Long id);
 
     void delete(Long id);
 

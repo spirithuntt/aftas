@@ -1,6 +1,8 @@
 package com.example.aftas.service;
 
 import com.example.aftas.domain.Member;
+import com.example.aftas.dto.requests.MemberRequestDTO;
+import com.example.aftas.dto.responses.MemberResponseDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -8,20 +10,20 @@ import java.util.List;
 @Component
 public interface MemberService {
 
-    Member save(Member member);
+    MemberResponseDTO save(MemberRequestDTO member);
 
-    List<Member> getAll();
+    List<MemberResponseDTO> getAll();
 
-    Member getById(Long id);
+    MemberResponseDTO getById(Long id);
 
-    Member update(Member member, Long id);
+    MemberResponseDTO update(MemberRequestDTO member, Long id);
 
     void delete(Long id);
 
-    List<Member> getByName(String name);
+    List<MemberResponseDTO> getByName(String name);
 
-    Member getByIdentityNumber(String identityNumber);
+    MemberResponseDTO getByIdentityNumber(String identityNumber);
 
-    List<Member> getByNameOrFamilyNameOrNumber(String searchParam);
+    List<MemberResponseDTO> getByNameOrFamilyNameOrNumber(String searchParam);
 
 }

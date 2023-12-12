@@ -12,7 +12,7 @@ import java.time.LocalTime;
 public record CompetitionRequestDTO(
 
         @NotNull(message = "Code shouldn't be null")
-        @NotNull(message = "Code shouldn't be blank")
+        @NotBlank(message = "Code shouldn't be blank")
         String code,
 
         @NotNull(message = "Date shouldn't be null")

@@ -4,39 +4,45 @@ import com.example.aftas.domain.Competition;
 import com.example.aftas.domain.Fish;
 import com.example.aftas.domain.Hunting;
 import com.example.aftas.domain.Member;
+import com.example.aftas.dto.requests.HuntingRequestDTO;
+import com.example.aftas.dto.responses.HuntingResponseDTO;
 import com.example.aftas.service.HuntingService;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public class HuntingServiceImpl implements HuntingService {
     @Override
-    public Hunting save(Hunting hunting) {
+    public HuntingResponseDTO save(HuntingRequestDTO hunting) {
         return null;
     }
 
     @Override
-    public List<Hunting> getAll() {
+    public List<HuntingResponseDTO> getAll() {
         return null;
     }
 
     @Override
-    public Hunting getById(Long id) {
+    public HuntingResponseDTO getById(Long id) {
         return null;
     }
 
     @Override
-    public List<Hunting> getByCompetition(String competition){ return null;}
+    public List<HuntingResponseDTO> getByCompetition(String competition) {
+        return null;
+    }
 
     @Override
-    public List<Hunting> getByMember(String member){ return null;}
+    public List<HuntingResponseDTO> getByMember(String member) {
+        return null;
+    }
 
     @Override
-    public List<Hunting> getByCompetitionAndMember(String competition, String member){ return null;}
+    public List<HuntingResponseDTO> getByCompetitionAndMember(String competition, String member) {
+        return null;
+    }
 
     @Override
-    public Hunting update(Hunting hunting, Long id) {
+    public HuntingResponseDTO update(Hunting hunting, Long id) {
         return null;
     }
 

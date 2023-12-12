@@ -3,6 +3,8 @@ package com.example.aftas.service;
 import com.example.aftas.domain.Competition;
 import com.example.aftas.domain.Member;
 import com.example.aftas.domain.Ranking;
+import com.example.aftas.dto.requests.RegisterMemberRequestDTO;
+import com.example.aftas.dto.responses.RankingResponseDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -10,19 +12,19 @@ import java.util.List;
 @Component
 public interface RankingService {
 
-    Ranking save(Ranking ranking);
+    RankingService save(RegisterMemberRequestDTO ranking);
 
-    List<Ranking>getAll();
+    List<RankingResponseDTO>getAll();
 
-    Ranking getById(Long id);
+    RankingResponseDTO getById(Long id);
 
-    List<Ranking> getByMember(String member);
+    List<RankingResponseDTO> getByMember(String member);
 
-    List<Ranking> getByCompetition(String competition);
+    List<RankingResponseDTO> getByCompetition(String competition);
 
-    Ranking getByMemberAndCompetition(String member, String competition);
+    RankingResponseDTO getByMemberAndCompetition(String member, String competition);
 
-    Ranking update(Ranking ranking, Long id);
+    RankingResponseDTO update(Ranking ranking, Long id);
 
     void delete(Long id);
 

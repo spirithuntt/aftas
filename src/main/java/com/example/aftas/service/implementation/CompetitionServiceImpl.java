@@ -1,33 +1,34 @@
 package com.example.aftas.service.implementation;
 
-import com.example.aftas.domain.Competition;
+import com.example.aftas.dto.requests.CompetitionRequestDTO;
+import com.example.aftas.dto.responses.CompetitionResponseDTO;
 import com.example.aftas.service.CompetitionService;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public class CompetitionServiceImpl implements CompetitionService {
     @Override
-    public Competition save(Competition competition) {
+    public CompetitionResponseDTO save(CompetitionRequestDTO competition) {
         return null;
     }
 
     @Override
-    public List<Competition> getAll() {
+    public List<CompetitionResponseDTO> getAll() {
         return null;
     }
 
     @Override
-    public Competition getByCode(String code){ return null;}
-
-    @Override
-    public Competition getById(Long id) {
+    public CompetitionResponseDTO getById(Long id) {
         return null;
     }
 
     @Override
-    public Competition update(Competition competition, Long id) {
+    public CompetitionResponseDTO getByCode(String code) {
+        return null;
+    }
+
+    @Override
+    public CompetitionResponseDTO update(CompetitionRequestDTO competition, Long id) {
         return null;
     }
 
