@@ -1,12 +1,12 @@
 package com.example.aftas.service.implementation;
 
-import com.example.aftas.domain.Competition;
-import com.example.aftas.domain.Member;
 import com.example.aftas.domain.Ranking;
 import com.example.aftas.service.RankingService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class RankingServiceImpl implements RankingService {
     @Override
     public Ranking save(Ranking ranking) {

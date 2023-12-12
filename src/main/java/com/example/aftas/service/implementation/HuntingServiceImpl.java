@@ -5,9 +5,11 @@ import com.example.aftas.domain.Fish;
 import com.example.aftas.domain.Hunting;
 import com.example.aftas.domain.Member;
 import com.example.aftas.service.HuntingService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class HuntingServiceImpl implements HuntingService {
     @Override
     public Hunting save(Hunting hunting) {

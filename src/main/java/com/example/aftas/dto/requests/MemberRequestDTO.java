@@ -1,4 +1,4 @@
-package com.example.aftas.dto;
+package com.example.aftas.dto.requests;
 
 import com.example.aftas.domain.Member;
 import com.example.aftas.domain.enums.IdentityDocumentType;

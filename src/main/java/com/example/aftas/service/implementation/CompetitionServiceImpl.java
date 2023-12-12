@@ -2,9 +2,11 @@ package com.example.aftas.service.implementation;
 
 import com.example.aftas.domain.Competition;
 import com.example.aftas.service.CompetitionService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CompetitionServiceImpl implements CompetitionService {
     @Override
     public Competition save(Competition competition) {

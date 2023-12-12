@@ -1,4 +1,4 @@
-package com.example.aftas.dto;
+package com.example.aftas.dto.requests;
 
 import com.example.aftas.domain.Competition;
 import com.example.aftas.domain.Member;
