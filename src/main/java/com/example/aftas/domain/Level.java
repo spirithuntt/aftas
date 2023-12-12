@@ -17,10 +17,12 @@ public class Level {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private Integer code;
 
     private String description;
 
+    @Column(unique = true)
     private Integer points;
 
 }

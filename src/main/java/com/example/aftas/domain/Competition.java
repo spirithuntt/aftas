@@ -20,8 +20,10 @@ public class Competition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String code;
 
+    @Column(unique = true)
     private LocalDate date;
 
     private LocalTime startTime;

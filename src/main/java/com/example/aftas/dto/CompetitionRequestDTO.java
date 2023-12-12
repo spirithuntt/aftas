@@ -13,12 +13,10 @@ public record CompetitionRequestDTO(
 
         @NotNull(message = "Code shouldn't be null")
         @NotNull(message = "Code shouldn't be blank")
-        @Column(unique = true)
         String code,
 
         @NotNull(message = "Date shouldn't be null")
         @NotBlank(message = "Date shouldn't be blank")
-        @Column(unique = true)
         @Future
         @DateTimeFormat(pattern = "yyyy-mm-dd")
         LocalDate date,

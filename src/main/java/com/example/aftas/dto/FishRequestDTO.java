@@ -14,7 +14,6 @@ public record FishRequestDTO(
     @NotNull(message = "Name is required")
     @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
     @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "Name must be alphanumeric")
-    @Column(unique = true)
     String name,
 
     @NotNull(message = "Average weight is required")
