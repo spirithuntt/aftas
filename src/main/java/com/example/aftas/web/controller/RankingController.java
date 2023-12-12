@@ -1,6 +1,7 @@
 package com.example.aftas.web.controller;
 
 import com.example.aftas.domain.Ranking;
+import com.example.aftas.dto.requests.RegisterMemberRequestDTO;
 import com.example.aftas.handler.response.ResponseMessage;
 import com.example.aftas.service.RankingService;
 import lombok.RequiredArgsConstructor;
@@ -52,15 +53,15 @@ public class RankingController {
     }
 
     @PostMapping
-    public ResponseEntity save(@RequestBody Ranking ranking){
-        Ranking ranking1 = rankingService.save(ranking);
+    public ResponseEntity save(@RequestBody RegisterMemberRequestDTO ranking){
+        Ranking ranking1 = rankingService.save(ranking.toRanking());
         if (ranking1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Ranking created successfully", ranking1);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody Ranking ranking, @PathVariable Long id){
-        Ranking ranking1 = rankingService.update(ranking, id);
+    public ResponseEntity update(@RequestBody RegisterMemberRequestDTO ranking, @PathVariable Long id){
+        Ranking ranking1 = rankingService.update(ranking.toRanking(), id);
         if (ranking1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Ranking updated successfully", ranking1);
     }

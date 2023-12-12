@@ -2,6 +2,7 @@ package com.example.aftas.web.controller;
 
 import com.example.aftas.domain.Fish;
 import com.example.aftas.domain.Level;
+import com.example.aftas.dto.requests.FishRequestDTO;
 import com.example.aftas.handler.response.ResponseMessage;
 import com.example.aftas.service.FishService;
 import lombok.RequiredArgsConstructor;
@@ -47,15 +48,15 @@ public class FishController {
     }
 
     @PostMapping
-    public ResponseEntity save(@RequestBody Fish fish){
-        Fish fish1 = fishService.save(fish);
+    public ResponseEntity save(@RequestBody FishRequestDTO fish){
+        Fish fish1 = fishService.save(fish.toFish());
         if (fish1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Fish created successfully", fish1);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody Fish fish, @PathVariable Long id){
-        Fish fish1 = fishService.update(fish, id);
+    public ResponseEntity update(@RequestBody FishRequestDTO fish, @PathVariable Long id){
+        Fish fish1 = fishService.update(fish.toFish(), id);
         if (fish1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Fish updated successfully", fish1);
     }

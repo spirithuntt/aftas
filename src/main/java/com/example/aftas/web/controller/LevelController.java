@@ -1,6 +1,7 @@
 package com.example.aftas.web.controller;
 
 import com.example.aftas.domain.Level;
+import com.example.aftas.dto.requests.LevelRequestDTO;
 import com.example.aftas.handler.response.ResponseMessage;
 import com.example.aftas.service.LevelService;
 import lombok.RequiredArgsConstructor;
@@ -38,15 +39,15 @@ public class LevelController {
     }
 
     @PostMapping
-    public ResponseEntity save(@RequestBody Level level){
-        Level level1 = levelService.save(level);
+    public ResponseEntity save(@RequestBody LevelRequestDTO level){
+        Level level1 = levelService.save(level.toLevel());
         if (level1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Level created successfully", level1);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody Level level, @PathVariable Long id){
-        Level level1 = levelService.update(level, id);
+    public ResponseEntity update(@RequestBody LevelRequestDTO level, @PathVariable Long id){
+        Level level1 = levelService.update(level.toLevel(), id);
         if (level1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Level updated successfully", level1);
     }

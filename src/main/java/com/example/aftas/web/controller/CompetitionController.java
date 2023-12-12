@@ -1,6 +1,7 @@
 package com.example.aftas.web.controller;
 
 import com.example.aftas.domain.Competition;
+import com.example.aftas.dto.requests.CompetitionRequestDTO;
 import com.example.aftas.handler.response.ResponseMessage;
 import com.example.aftas.service.CompetitionService;
 import lombok.RequiredArgsConstructor;
@@ -38,15 +39,15 @@ public class CompetitionController {
     }
 
     @PostMapping
-    public ResponseEntity save(@RequestBody Competition competition){
-        Competition competition1 = competitionService.save(competition);
+    public ResponseEntity save(@RequestBody CompetitionRequestDTO competition){
+        Competition competition1 = competitionService.save(competition.toCompetition());
         if (competition1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Competition created successfully", competition1);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody Competition competition, @PathVariable Long id){
-        Competition competition1 = competitionService.update(competition, id);
+    public ResponseEntity update(@RequestBody CompetitionRequestDTO competition, @PathVariable Long id){
+        Competition competition1 = competitionService.update(competition.toCompetition(), id);
         if (competition1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Competition updated successfully", competition1);
     }

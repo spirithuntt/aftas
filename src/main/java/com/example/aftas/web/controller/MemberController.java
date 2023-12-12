@@ -1,6 +1,7 @@
 package com.example.aftas.web.controller;
 
 import com.example.aftas.domain.Member;
+import com.example.aftas.dto.requests.MemberRequestDTO;
 import com.example.aftas.handler.response.ResponseMessage;
 import com.example.aftas.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -52,15 +53,15 @@ public class MemberController {
     }
 
     @PostMapping
-    public ResponseEntity save(@RequestBody Member member){
-        Member member1 = memberService.save(member);
+    public ResponseEntity save(@RequestBody MemberRequestDTO member){
+        Member member1 = memberService.save(member.toMember());
         if (member1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Member created successfully", member1);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody Member member, @PathVariable Long id){
-        Member member1 = memberService.update(member, id);
+    public ResponseEntity update(@RequestBody MemberRequestDTO member, @PathVariable Long id){
+        Member member1 = memberService.update(member.toMember(), id);
         if (member1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Member updated successfully", member1);
     }

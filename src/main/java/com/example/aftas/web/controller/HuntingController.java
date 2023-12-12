@@ -1,6 +1,7 @@
 package com.example.aftas.web.controller;
 
 import com.example.aftas.domain.Hunting;
+import com.example.aftas.dto.requests.HuntingRequestDTO;
 import com.example.aftas.handler.response.ResponseMessage;
 import com.example.aftas.service.HuntingService;
 import lombok.RequiredArgsConstructor;
@@ -52,15 +53,15 @@ public class HuntingController {
     }
 
     @PostMapping
-    public ResponseEntity save(@RequestBody Hunting hunting){
-        Hunting hunting1 = huntingService.save(hunting);
+    public ResponseEntity save(@RequestBody HuntingRequestDTO hunting){
+        Hunting hunting1 = huntingService.save(hunting.toHunting());
         if (hunting1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Hunting created successfully", hunting1);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody Hunting hunting, @PathVariable Long id){
-        Hunting hunting1 = huntingService.update(hunting, id);
+    public ResponseEntity update(@RequestBody HuntingRequestDTO hunting, @PathVariable Long id){
+        Hunting hunting1 = huntingService.update(hunting.toHunting(), id);
         if (hunting1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Hunting updated successfully", hunting1);
     }
