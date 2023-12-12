@@ -8,9 +8,7 @@ import jakarta.persistence.ManyToOne;
 
 public record HuntingRequestDTO(
         String fish,
-
         Integer member,
-
         String competition
 ) {
     public Hunting toHunting() {
