@@ -2,7 +2,6 @@ package com.example.aftas.service.implementation;
 
 import com.example.aftas.domain.Competition;
 import com.example.aftas.domain.Fish;
-import com.example.aftas.domain.Hunting;
 import com.example.aftas.domain.Member;
 import com.example.aftas.dto.requests.HuntingRequestDTO;
 import com.example.aftas.dto.responses.HuntingResponseDTO;
@@ -42,7 +41,7 @@ public class HuntingServiceImpl implements HuntingService {
     }
 
     @Override
-    public HuntingResponseDTO update(Hunting hunting, Long id) {
+    public HuntingResponseDTO update(HuntingRequestDTO hunting, Long id) {
         return null;
     }
 

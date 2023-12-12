@@ -9,7 +9,7 @@ import java.util.List;
 
 public class RankingServiceImpl implements RankingService {
     @Override
-    public RankingService save(RegisterMemberRequestDTO ranking) {
+    public RankingResponseDTO save(RegisterMemberRequestDTO ranking) {
         return null;
     }
 

@@ -2,7 +2,6 @@ package com.example.aftas.service;
 
 import com.example.aftas.domain.Competition;
 import com.example.aftas.domain.Fish;
-import com.example.aftas.domain.Hunting;
 import com.example.aftas.domain.Member;
 import com.example.aftas.dto.requests.HuntingRequestDTO;
 import com.example.aftas.dto.responses.HuntingResponseDTO;
@@ -25,7 +24,7 @@ public interface HuntingService {
 
     List<HuntingResponseDTO> getByCompetitionAndMember(String competition, String member);
 
-    HuntingResponseDTO update(Hunting hunting, Long id);
+    HuntingResponseDTO update(HuntingRequestDTO hunting, Long id);
 
     void checkIfFishAlreadyHunted(Member member, Competition competition, Fish fish);
 
