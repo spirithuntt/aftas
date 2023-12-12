@@ -3,11 +3,9 @@ package com.example.aftas.dto.requests;
 import com.example.aftas.domain.Competition;
 import com.example.aftas.domain.Member;
 import com.example.aftas.domain.Ranking;
-import jakarta.persistence.ManyToOne;
 
 public record RegisterMemberRequestDTO(
     Integer member,
-
     String competition
 ) {
     public Ranking toRanking() {
