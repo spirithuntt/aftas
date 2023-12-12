@@ -20,60 +20,60 @@ public class MemberController {
 
     @GetMapping
     public ResponseEntity getAll(){
-        List<MemberResponseDTO> members = memberService.getAll();
+        List<Member> members = memberService.getAll();
         if (members.isEmpty()) return ResponseMessage.notFound("No member was found");
-        else return ResponseMessage.ok("Members fetched successfully", members);
+        else return ResponseMessage.ok("Members fetched successfully", members.stream().map(MemberResponseDTO::fromMember).toList());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity getMemberById(@PathVariable Long id){
-        MemberResponseDTO member = memberService.getById(id);
+        Member member = memberService.getById(id);
         if(member == null) return ResponseMessage.notFound("Member not found");
-        else return ResponseMessage.ok("Success", member);
+        else return ResponseMessage.ok("Success", MemberResponseDTO.fromMember(member));
     }
 
     @GetMapping("/name/{name}")
     public ResponseEntity getMemberByName(@PathVariable String name){
-        List<MemberResponseDTO> members = memberService.getByName(name);
+        List<Member> members = memberService.getByName(name);
         if(members.isEmpty()) return ResponseMessage.notFound("No member was found");
-        else return ResponseMessage.ok("Success", members);
+        else return ResponseMessage.ok("Success", members.stream().map(MemberResponseDTO::fromMember).toList());
     }
 
     @GetMapping("/identity_number/{identityNumber}")
     public ResponseEntity getMemberByIdentityNumber(@PathVariable String identityNumber){
-        MemberResponseDTO member = memberService.getByIdentityNumber(identityNumber);
+        Member member = memberService.getByIdentityNumber(identityNumber);
         if(member == null) return ResponseMessage.notFound("Member not found");
-        else return ResponseMessage.ok("Success", member);
+        else return ResponseMessage.ok("Success", MemberResponseDTO.fromMember(member));
     }
 
     @GetMapping("/search/{searchParam}")
     public ResponseEntity getMemberByNameOrFamilyNameOrNumber(@PathVariable String searchParam){
-        List<MemberResponseDTO> members = memberService.getByNameOrFamilyNameOrNumber(searchParam);
+        List<Member> members = memberService.getByNameOrFamilyNameOrNumber(searchParam);
         if(members.isEmpty()) return ResponseMessage.notFound("No member was found");
-        else return ResponseMessage.ok("Success", members);
+        else return ResponseMessage.ok("Success", members.stream().map(MemberResponseDTO::fromMember).toList());
     }
 
     @PostMapping
     public ResponseEntity save(@RequestBody MemberRequestDTO member){
-        MemberResponseDTO member1 = memberService.save(member);
+        Member member1 = memberService.save(member.toMember());
         if (member1 == null) return ResponseMessage.badRequest("bad request");
-        else return ResponseMessage.created("Member created successfully", member1);
+        else return ResponseMessage.created("Member created successfully", MemberResponseDTO.fromMember(member1));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity update(@RequestBody MemberRequestDTO member, @PathVariable Long id){
-        MemberResponseDTO member1 = memberService.update(member, id);
+        Member member1 = memberService.update(member.toMember(), id);
         if (member1 == null) return ResponseMessage.badRequest("bad request");
-        else return ResponseMessage.created("Member updated successfully", member1);
+        else return ResponseMessage.created("Member updated successfully", MemberResponseDTO.fromMember(member1));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id){
-        MemberResponseDTO member = memberService.getById(id);
+        Member member = memberService.getById(id);
         if (member == null) return ResponseMessage.notFound("Member not found");
         else {
             memberService.delete(id);
-            return ResponseMessage.ok("Member deleted successfully", member);
+            return ResponseMessage.ok("Member deleted successfully", MemberResponseDTO.fromMember(member));
         }
     }
 

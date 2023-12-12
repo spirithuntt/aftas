@@ -1,35 +1,33 @@
 package com.example.aftas.service.implementation;
 
 import com.example.aftas.domain.Level;
-import com.example.aftas.dto.requests.LevelRequestDTO;
-import com.example.aftas.dto.responses.LevelResponseDTO;
 import com.example.aftas.service.LevelService;
 
 import java.util.List;
 
 public class LevelServiceImpl implements LevelService {
     @Override
-    public LevelResponseDTO save(LevelRequestDTO level) {
+    public Level save(Level level) {
         return null;
     }
 
     @Override
-    public List<LevelResponseDTO> getAll() {
+    public List<Level> getAll() {
         return null;
     }
 
     @Override
-    public LevelResponseDTO getById(Long id) {
+    public Level getById(Long id) {
         return null;
     }
 
     @Override
-    public LevelResponseDTO getByCode(Integer code) {
+    public Level getByCode(Integer code) {
         return null;
     }
 
     @Override
-    public LevelResponseDTO update(LevelRequestDTO level, Long id) {
+    public Level update(Level level, Long id) {
         return null;
     }
 

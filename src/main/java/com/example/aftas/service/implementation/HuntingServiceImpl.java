@@ -2,46 +2,45 @@ package com.example.aftas.service.implementation;
 
 import com.example.aftas.domain.Competition;
 import com.example.aftas.domain.Fish;
+import com.example.aftas.domain.Hunting;
 import com.example.aftas.domain.Member;
-import com.example.aftas.dto.requests.HuntingRequestDTO;
-import com.example.aftas.dto.responses.HuntingResponseDTO;
 import com.example.aftas.service.HuntingService;
 
 import java.util.List;
 
 public class HuntingServiceImpl implements HuntingService {
     @Override
-    public HuntingResponseDTO save(HuntingRequestDTO hunting) {
+    public Hunting save(Hunting hunting) {
         return null;
     }
 
     @Override
-    public List<HuntingResponseDTO> getAll() {
+    public List<Hunting> getAll() {
         return null;
     }
 
     @Override
-    public HuntingResponseDTO getById(Long id) {
+    public Hunting getById(Long id) {
         return null;
     }
 
     @Override
-    public List<HuntingResponseDTO> getByCompetition(String competition) {
+    public List<Hunting> getByCompetition(String competition) {
         return null;
     }
 
     @Override
-    public List<HuntingResponseDTO> getByMember(String member) {
+    public List<Hunting> getByMember(String member) {
         return null;
     }
 
     @Override
-    public List<HuntingResponseDTO> getByCompetitionAndMember(String competition, String member) {
+    public List<Hunting> getByCompetitionAndMember(String competition, String member) {
         return null;
     }
 
     @Override
-    public HuntingResponseDTO update(HuntingRequestDTO hunting, Long id) {
+    public Hunting update(Hunting hunting, Long id) {
         return null;
     }
 

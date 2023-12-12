@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
 @Entity
@@ -25,9 +27,11 @@ public class Ranking {
     private Integer score;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Member member;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Competition competition;
 
 }

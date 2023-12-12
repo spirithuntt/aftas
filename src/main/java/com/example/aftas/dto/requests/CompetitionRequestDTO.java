@@ -23,12 +23,12 @@ public record CompetitionRequestDTO(
 
         @NotNull(message = "Time shouldn't be null")
         @NotBlank(message = "Time shouldn't be blank")
-        @DateTimeFormat(pattern = "hh:mm")
+        @DateTimeFormat(pattern = "hh:mm:ss")
         LocalTime startTime,
 
         @NotNull(message = "Time shouldn't be null")
         @NotBlank(message = "Time shouldn't be blank")
-        @DateTimeFormat(pattern = "hh:mm")
+        @DateTimeFormat(pattern = "hh:mm:ss")
         LocalTime endTime,
 
         @NotNull(message = "Number of participants shouldn't be null")

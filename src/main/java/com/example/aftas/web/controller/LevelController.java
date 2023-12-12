@@ -2,6 +2,7 @@ package com.example.aftas.web.controller;
 
 import com.example.aftas.domain.Level;
 import com.example.aftas.dto.requests.LevelRequestDTO;
+import com.example.aftas.dto.responses.HuntingResponseDTO;
 import com.example.aftas.dto.responses.LevelResponseDTO;
 import com.example.aftas.handler.response.ResponseMessage;
 import com.example.aftas.service.LevelService;
@@ -20,46 +21,46 @@ public class LevelController {
 
     @GetMapping
     public ResponseEntity getAll(){
-        List<LevelResponseDTO> levels = levelService.getAll();
+        List<Level> levels = levelService.getAll();
         if (levels.isEmpty()) return ResponseMessage.notFound("No level was found");
-        else return ResponseMessage.ok("Levels fetched successfully", levels);
+        else return ResponseMessage.ok("Levels fetched successfully", levels.stream().map(LevelResponseDTO::fromLevel).toList());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity getLevelById(@PathVariable Long id){
-        LevelResponseDTO level = levelService.getById(id);
+        Level level = levelService.getById(id);
         if(level == null) return ResponseMessage.notFound("Level not found");
-        else return ResponseMessage.ok("Success", level);
+        else return ResponseMessage.ok("Success", LevelResponseDTO.fromLevel(level));
     }
 
     @GetMapping("/code/{code}")
     public ResponseEntity getLevelByCode(@PathVariable Integer code){
-        LevelResponseDTO level = levelService.getByCode(code);
+        Level level = levelService.getByCode(code);
         if(level == null) return ResponseMessage.notFound("Level not found");
-        else return ResponseMessage.ok("Success", level);
+        else return ResponseMessage.ok("Success", LevelResponseDTO.fromLevel(level));
     }
 
     @PostMapping
     public ResponseEntity save(@RequestBody LevelRequestDTO level){
-        LevelResponseDTO level1 = levelService.save(level);
+        Level level1 = levelService.save(level.toLevel());
         if (level1 == null) return ResponseMessage.badRequest("bad request");
-        else return ResponseMessage.created("Level created successfully", level1);
+        else return ResponseMessage.created("Level created successfully", LevelResponseDTO.fromLevel(level1));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity update(@RequestBody LevelRequestDTO level, @PathVariable Long id){
-        LevelResponseDTO level1 = levelService.update(level, id);
+        Level level1 = levelService.update(level.toLevel(), id);
         if (level1 == null) return ResponseMessage.badRequest("bad request");
-        else return ResponseMessage.created("Level updated successfully", level1);
+        else return ResponseMessage.created("Level updated successfully", LevelResponseDTO.fromLevel(level1));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id){
-        LevelResponseDTO level = levelService.getById(id);
+        Level level = levelService.getById(id);
         if (level == null) return ResponseMessage.notFound("Level not found");
         else {
             levelService.delete(id);
-            return ResponseMessage.ok("Level deleted successfully", level);
+            return ResponseMessage.ok("Level deleted successfully", LevelResponseDTO.fromLevel(level));
         }
     }
 }

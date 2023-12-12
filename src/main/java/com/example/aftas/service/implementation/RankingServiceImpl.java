@@ -1,45 +1,43 @@
 package com.example.aftas.service.implementation;
 
 import com.example.aftas.domain.Ranking;
-import com.example.aftas.dto.requests.RegisterMemberRequestDTO;
-import com.example.aftas.dto.responses.RankingResponseDTO;
 import com.example.aftas.service.RankingService;
 
 import java.util.List;
 
 public class RankingServiceImpl implements RankingService {
     @Override
-    public RankingResponseDTO save(RegisterMemberRequestDTO ranking) {
+    public Ranking save(Ranking ranking) {
         return null;
     }
 
     @Override
-    public List<RankingResponseDTO> getAll() {
+    public List<Ranking> getAll() {
         return null;
     }
 
     @Override
-    public RankingResponseDTO getById(Long id) {
+    public Ranking getById(Long id) {
         return null;
     }
 
     @Override
-    public List<RankingResponseDTO> getByMember(String member) {
+    public List<Ranking> getByMember(String member) {
         return null;
     }
 
     @Override
-    public List<RankingResponseDTO> getByCompetition(String competition) {
+    public List<Ranking> getByCompetition(String competition) {
         return null;
     }
 
     @Override
-    public RankingResponseDTO getByMemberAndCompetition(String member, String competition) {
+    public Ranking getByMemberAndCompetition(String member, String competition) {
         return null;
     }
 
     @Override
-    public RankingResponseDTO update(Ranking ranking, Long id) {
+    public Ranking update(Ranking ranking, Long id) {
         return null;
     }
 

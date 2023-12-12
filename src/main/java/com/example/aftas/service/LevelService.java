@@ -1,8 +1,6 @@
 package com.example.aftas.service;
 
 import com.example.aftas.domain.Level;
-import com.example.aftas.dto.requests.LevelRequestDTO;
-import com.example.aftas.dto.responses.LevelResponseDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -10,15 +8,15 @@ import java.util.List;
 @Component
 public interface LevelService {
 
-    LevelResponseDTO save(LevelRequestDTO level);
+    Level save(Level level);
 
-    List<LevelResponseDTO> getAll();
+    List<Level> getAll();
 
-    LevelResponseDTO getById(Long id);
+    Level getById(Long id);
 
-    LevelResponseDTO getByCode(Integer code);
+    Level getByCode(Integer code);
 
-    LevelResponseDTO update(LevelRequestDTO level, Long id);
+    Level update(Level level, Long id);
 
     void delete(Long id);
 

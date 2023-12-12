@@ -9,4 +9,6 @@ public interface CompetitionRepository extends JpaRepository<Competition, Long> 
 
     Competition getCompetitionById(Long id);
 
+    Competition getCompetitionByCode(String code);
+
 }

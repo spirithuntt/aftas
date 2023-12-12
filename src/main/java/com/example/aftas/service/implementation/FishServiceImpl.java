@@ -1,39 +1,38 @@
 package com.example.aftas.service.implementation;
 
-import com.example.aftas.dto.requests.FishRequestDTO;
-import com.example.aftas.dto.responses.FishResponseDTO;
+import com.example.aftas.domain.Fish;
 import com.example.aftas.service.FishService;
 
 import java.util.List;
 
 public class FishServiceImpl implements FishService {
     @Override
-    public FishResponseDTO save(FishRequestDTO fish) {
+    public Fish save(Fish fish) {
         return null;
     }
 
     @Override
-    public List<FishResponseDTO> getAll() {
+    public List<Fish> getAll() {
         return null;
     }
 
     @Override
-    public FishResponseDTO getByName(String name) {
+    public Fish getByName(String name) {
         return null;
     }
 
     @Override
-    public List<FishResponseDTO> getByLevel(Integer code) {
+    public List<Fish> getByLevel(Integer code) {
         return null;
     }
 
     @Override
-    public FishResponseDTO getById(Long id) {
+    public Fish getById(Long id) {
         return null;
     }
 
     @Override
-    public FishResponseDTO update(FishRequestDTO fish, Long id) {
+    public Fish update(Fish fish, Long id) {
         return null;
     }
 
