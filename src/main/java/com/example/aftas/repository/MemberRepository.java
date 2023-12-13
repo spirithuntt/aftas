@@ -13,7 +13,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     List<Member> getMemberByName(String name);
 
-    Member getMemberByIdentityNumber(String identityNumber);
+    List<Member> getMemberByIdentityNumber(String identityNumber);
 
     List<Member> getMemberByNumber(Integer number);
 

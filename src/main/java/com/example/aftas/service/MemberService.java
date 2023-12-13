@@ -20,7 +20,7 @@ public interface MemberService {
 
     List<Member> getByName(String name);
 
-    Member getByIdentityNumber(String identityNumber);
+    List<Member> getByIdentityNumber(String identityNumber);
 
     List<Member> getByNameOrFamilyNameOrNumber(String searchParam);
 

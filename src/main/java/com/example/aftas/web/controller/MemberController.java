@@ -5,6 +5,8 @@ import com.example.aftas.dto.requests.MemberRequestDTO;
 import com.example.aftas.dto.responses.MemberResponseDTO;
 import com.example.aftas.handler.response.ResponseMessage;
 import com.example.aftas.service.MemberService;
+import jakarta.validation.Valid;
+import jdk.jfr.MemoryAddress;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,9 +43,9 @@ public class MemberController {
 
     @GetMapping("/identity_number/{identityNumber}")
     public ResponseEntity getMemberByIdentityNumber(@PathVariable String identityNumber){
-        Member member = memberService.getByIdentityNumber(identityNumber);
-        if(member == null) return ResponseMessage.notFound("Member not found");
-        else return ResponseMessage.ok("Success", MemberResponseDTO.fromMember(member));
+        List<Member> members = memberService.getByIdentityNumber(identityNumber);
+        if(members.isEmpty()) return ResponseMessage.notFound("Member not found");
+        else return ResponseMessage.ok("Success", members.stream().map(MemberResponseDTO::fromMember).toList());
     }
 
     @GetMapping("/search/{searchParam}")
@@ -54,14 +56,14 @@ public class MemberController {
     }
 
     @PostMapping
-    public ResponseEntity save(@RequestBody MemberRequestDTO member){
+    public ResponseEntity save(@RequestBody @Valid MemberRequestDTO member){
         Member member1 = memberService.save(member.toMember());
         if (member1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Member created successfully", MemberResponseDTO.fromMember(member1));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody MemberRequestDTO member, @PathVariable Long id){
+    public ResponseEntity update(@RequestBody @Valid MemberRequestDTO member, @PathVariable Long id){
         Member member1 = memberService.update(member.toMember(), id);
         if (member1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Member updated successfully", MemberResponseDTO.fromMember(member1));

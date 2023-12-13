@@ -6,6 +6,7 @@ import com.example.aftas.dto.responses.HuntingResponseDTO;
 import com.example.aftas.dto.responses.LevelResponseDTO;
 import com.example.aftas.handler.response.ResponseMessage;
 import com.example.aftas.service.LevelService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,14 +42,14 @@ public class LevelController {
     }
 
     @PostMapping
-    public ResponseEntity save(@RequestBody LevelRequestDTO level){
+    public ResponseEntity save(@RequestBody @Valid LevelRequestDTO level){
         Level level1 = levelService.save(level.toLevel());
         if (level1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Level created successfully", LevelResponseDTO.fromLevel(level1));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody LevelRequestDTO level, @PathVariable Long id){
+    public ResponseEntity update(@RequestBody @Valid LevelRequestDTO level, @PathVariable Long id){
         Level level1 = levelService.update(level.toLevel(), id);
         if (level1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Level updated successfully", LevelResponseDTO.fromLevel(level1));
