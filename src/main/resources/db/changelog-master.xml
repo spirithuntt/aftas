@@ -5,6 +5,5 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd"
         objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
-
-    <include file="db/changelog/2023/12/12-01-changelog.xml"/>
+    <include file="db/changelog/2023/12/13-01-changelog.xml"/>
 </databaseChangeLog>

@@ -21,8 +21,8 @@ import java.util.List;
 @Builder
 @Entity
 public class Member {
-    @Id @GeneratedValue
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @NotNull(message = "name can not be null")
@@ -35,7 +35,6 @@ public class Member {
 
     @PastOrPresent(message = "Access date must be in the past or present")
     @Temporal(TemporalType.DATE)
-    @Size(min = 3, max = 20, message = "Access date must be between 3 and 20 characters")
     private Date accessDate;
 
     @NotNull(message = "Nationality can not be null")
@@ -45,7 +44,6 @@ public class Member {
     private IdentityDocumentType identityDocumentType;
 
     @NotNull(message = "Identity number can not be null")
-    @Size(min = 3, max = 20, message = "Identity number must be between 3 and 20 characters")
     @Column(unique = true)
     private String identityNumber;
 
@@ -57,6 +55,5 @@ public class Member {
     @OneToMany(mappedBy = "member")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Hunting> hunting;
-
 
 }

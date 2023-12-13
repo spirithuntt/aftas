@@ -32,6 +32,16 @@ public class MemberControllerImpl implements MemberController {
         }
     }
 
+    @GetMapping
+    public ResponseEntity getAllMembers() {
+        List<Member> members = memberService.getAllMembers();
+        if (members.isEmpty()) {
+            return ResponseMessage.notFound("Members not found");
+        } else {
+            return ResponseMessage.ok("Success", members);
+        }
+    }
+
     @PostMapping
     public ResponseEntity addMember(@Valid @RequestBody Member member) {
         Member member1 = memberService.addMember(member);
@@ -42,15 +52,17 @@ public class MemberControllerImpl implements MemberController {
         }
     }
 
-    @GetMapping
-    public ResponseEntity searchMemberByName(@RequestBody String name) {
+    @GetMapping("/{name}")
+    public ResponseEntity searchMemberByName(@RequestParam String name) {
         List<Member> members = memberService.searchMemberByName(name);
-        if(members.isEmpty()) {
+        if (members.isEmpty()) {
             return ResponseMessage.notFound("Member not found");
-        }else {
+        } else {
             return ResponseMessage.ok("Success", members);
         }
     }
+
+
 
     @PutMapping("/{id}")
     public ResponseEntity updateMember(@RequestBody Member member, @PathVariable Long id) {

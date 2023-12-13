@@ -22,8 +22,6 @@ public record MemberRequestDTO(
 
         //accessDate
         @NotNull(message = "Access date can't be null")
-        @NotBlank(message = "Access date can't be blank")
-        @Size(max = 50, min = 2, message = "Access date must be between 2 and 50 characters")
         Date accessDate,
 
 

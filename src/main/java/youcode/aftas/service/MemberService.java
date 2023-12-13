@@ -14,4 +14,5 @@ public interface MemberService {
     List<Member> searchMemberByIdentityNumber(String identityNumber);
     Member updateMember(Member member, Long id);
     void deleteMember(Long id);
+    List<Member> getAllMembers();
 }
