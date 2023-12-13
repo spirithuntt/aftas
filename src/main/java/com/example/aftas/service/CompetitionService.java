@@ -1,8 +1,6 @@
 package com.example.aftas.service;
 
 import com.example.aftas.domain.Competition;
-import com.example.aftas.domain.Member;
-import com.example.aftas.domain.Ranking;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;

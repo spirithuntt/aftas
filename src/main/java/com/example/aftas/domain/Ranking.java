@@ -16,9 +16,8 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
 @Builder
 public class Ranking {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private RankId id;
 
     @Column(columnDefinition = "integer default 0")
     private Integer rank;
@@ -27,10 +26,14 @@ public class Ranking {
     private Integer score;
 
     @ManyToOne
+    @JoinColumn(name = "member_id")
+    @MapsId("memberId")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Member member;
 
     @ManyToOne
+    @JoinColumn(name = "competition_code")
+    @MapsId("competitionCode")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Competition competition;
 

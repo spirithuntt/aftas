@@ -60,8 +60,10 @@ public class CompetitionServiceImpl implements CompetitionService {
             existingCompetition.setStartTime(competition.getStartTime());
             existingCompetition.setNumberOfParticipants(competition.getNumberOfParticipants());
             if(checkDateAvailability(competition.getDate())){
+                existingCompetition.setDate(competition.getDate());
                 existingCompetition.setCode(generateCode(competition.getDate(), competition.getLocation()));
             }
+            return competitionRepository.save(existingCompetition);
         }
         return null;
     }

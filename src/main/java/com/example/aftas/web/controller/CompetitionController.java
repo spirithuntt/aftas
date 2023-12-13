@@ -49,7 +49,7 @@ public class CompetitionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody CompetitionRequestDTO competition, @PathVariable Long id){
+    public ResponseEntity update(@RequestBody @Valid CompetitionRequestDTO competition, @PathVariable Long id){
         Competition competition1 = competitionService.update(competition.toCompetition(), id);
         if (competition1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Competition updated successfully", CompetitionResponseDTO.fromCompetition(competition1));
