@@ -9,4 +9,11 @@ import youcode.aftas.domain.Member;
 public interface HuntingService {
     Hunting insertHunting(Fish fish, Member member);
 
+    Hunting getHuntingById(Long id);
+
+    Hunting updateHunting(Hunting hunting);
+
+    void deleteHunting(Long id);
+
+
 }

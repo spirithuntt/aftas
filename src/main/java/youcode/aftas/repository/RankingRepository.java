@@ -27,4 +27,6 @@ public interface RankingRepository extends JpaRepository<Ranking, Long>{
     @Query("SELECT COUNT(r) FROM Ranking r WHERE r.competition.id = :competitionId")
     int countByParticipantsId(@Param("competitionId") Long competitionId);
 
+    Ranking findByMemberIdAndCompetitionId(Long memberId, Long competitionId);
+
 }

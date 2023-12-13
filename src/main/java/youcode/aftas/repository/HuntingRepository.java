@@ -7,4 +7,5 @@ import youcode.aftas.domain.Hunting;
 @Repository
 public interface HuntingRepository extends JpaRepository<Hunting, Long>{
     Hunting findByFishIdAndMemberId(Long fishId, Long memberId);
+    Hunting findById(long id);
 }

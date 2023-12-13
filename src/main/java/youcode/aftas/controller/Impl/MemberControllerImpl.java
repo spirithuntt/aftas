@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/members")
-
 public class MemberControllerImpl implements MemberController {
     private final MemberService memberService;
 

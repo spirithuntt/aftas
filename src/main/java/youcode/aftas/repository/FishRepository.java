@@ -10,5 +10,6 @@ import java.util.List;
 public interface FishRepository extends JpaRepository<Fish, Long> {
     Boolean existsByName(String name);
     List<Fish> findAllByOrderByLevelAsc();
+    Fish findById(long id);
 
 }

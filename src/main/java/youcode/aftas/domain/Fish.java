@@ -1,5 +1,6 @@
 package youcode.aftas.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -25,9 +26,18 @@ public class Fish {
     private Double averageWeight;
 
     @OneToMany(mappedBy = "fish")
-    private List<Hunting> huntings;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Hunting> hunting;
 
     @ManyToOne
     private Level level;
+    
 
+    /*{
+        "name": "fish",
+        "averageWeight": 2.5,
+        "level": {
+            "id": 1
+        }
+    }*/
 }

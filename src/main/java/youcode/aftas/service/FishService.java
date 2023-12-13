@@ -7,7 +7,9 @@ import java.util.List;
 
 @Service
 public interface FishService {
-    void addFish(String name, Double averageWeight);
-
     List<Fish> findAllByOrderByLevelAsc();
+    Fish getFishById(long id);
+    Fish addFish(Fish fish);
+    Fish updateFish(Fish fish, long id);
+    void deleteFish(long id);
 }

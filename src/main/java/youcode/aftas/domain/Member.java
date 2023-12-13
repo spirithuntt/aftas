@@ -1,6 +1,7 @@
 package youcode.aftas.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -49,11 +50,13 @@ public class Member {
     private String identityNumber;
 
     @OneToMany(mappedBy = "member")
-    private List<Ranking> rankings;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Ranking> ranking;
 
 
-
-
+    @OneToMany(mappedBy = "member")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Hunting> hunting;
 
 
 }

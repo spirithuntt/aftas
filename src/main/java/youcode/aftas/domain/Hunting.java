@@ -14,13 +14,17 @@ public class Hunting {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotNull(message = "Code can not be null")
+    @NotNull(message = "numberOfFish can not be null")
     private Integer numberOfFish;
+
+    @ManyToOne
+    private Competition competition;
 
     @ManyToOne
     private Member member;
 
     @ManyToOne
     private Fish fish;
+
 
 }

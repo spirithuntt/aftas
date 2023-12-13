@@ -16,7 +16,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
      List<Member> findByIdentityNumber(String identityNumber);
 
-    boolean existsByRankings_Competition(Competition competition);
+    boolean existsByRanking_Competition(Competition competition);
 
 
 }

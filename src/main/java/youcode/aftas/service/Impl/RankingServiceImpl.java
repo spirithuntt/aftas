@@ -53,10 +53,25 @@ public class RankingServiceImpl implements RankingService {
         if (competition == null) {
             throw new RuntimeException("Competition not found");
         }
-        if (competition.getRankings().size() < 3) {
+        if (competition.getRanking().size() < 3) {
             throw new RuntimeException("Not enough rankings");
         }
         rankingRepository.findPodiumRankingsByCompetitionId(competition.getId());
+    }
+
+    @Override
+    public Ranking getRankingById(Long id) {
+        return rankingRepository.findById(id).orElseThrow(() -> new RuntimeException("Ranking not found"));
+    }
+
+    @Override
+    public Ranking getRankingsByMemberIdAndCompetitionId(Long memberId, Long competitionId) {
+        return rankingRepository.findByMemberIdAndCompetitionId(memberId, competitionId);
+    }
+
+    @Override
+    public void deleteRanking(Long id) {
+        rankingRepository.deleteById(id);
     }
 
 }

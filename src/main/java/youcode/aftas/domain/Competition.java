@@ -1,6 +1,8 @@
 package youcode.aftas.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -23,11 +25,10 @@ public class Competition {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotNull(message = "Code can not be null")
-    @Size(min = 1, max = 20, message = "Code must be between 3 and 20 characters")
     //ex :  Imsouane: pattern: ims-22-12-23 (ims-yy-mm-dd)
+    @Nullable
     @Pattern(regexp = "[a-z]{3}-[0-9]{2}-[0-9]{2}-[0-9]{2}", message = "Code must be like ims-22-12-23")
-    private String Code;
+    private String code;
 
     private Date date;
 
@@ -46,5 +47,21 @@ public class Competition {
     private Double amount;
 
     @OneToMany(mappedBy = "competition")
-    private List<Ranking> rankings;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Ranking> ranking;
+
+    @OneToMany(mappedBy = "competition")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Hunting> hunting;
+/*
+    {
+        "code": "ims-22-12-23",
+        "date": "2021-12-23",
+        "startTime": "12:00:00",
+        "endTime": "12:00:00",
+        "numberOfParticipants": 10,
+        "location": "Imsouane",
+        "amount": 1000
+    }
+ */
 }

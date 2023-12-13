@@ -9,16 +9,14 @@ import java.util.List;
 
 @Repository
 public interface LevelRepository extends JpaRepository<Level, Long>{
-    List<Level> findByName(String name);
-
     boolean existsByPointsGreaterThanEqual(int points);
 
     boolean existsByPointsLessThanEqual(int points);
 
     boolean existsByPoints(int points);
 
-
     boolean existsByShootingLevel(int shootingLevel);
+
 
 
 }
