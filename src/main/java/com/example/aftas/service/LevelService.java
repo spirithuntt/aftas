@@ -20,6 +20,6 @@ public interface LevelService {
 
     void delete(Long id);
 
-    void checkIfLevelIsValid(Level level);
+    Boolean checkIfLevelIsValid(Level level);
 
 }
