@@ -69,12 +69,12 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public Member getByNumber(Integer number) {
+        return memberRepository.getMemberByNumber(number);
+    }
+
+    @Override
     public List<Member> getByNameOrFamilyNameOrNumber(String searchParam) {
-        try{
-            Integer number = Integer.parseInt(searchParam);
-            return memberRepository.getMemberByNumber(number);
-        }catch (NumberFormatException e){
-            return memberRepository.getMemberByNameOrFamilyName(searchParam, searchParam);
-        }
+        return memberRepository.findByNumberOrFirstNameOrLastName(searchParam);
     }
 }

@@ -11,17 +11,17 @@ import java.util.List;
 @Component
 public interface HuntingService {
 
-    Hunting save(Hunting hunting);
+    Hunting save(Hunting hunting, Double weight);
 
     List<Hunting> getAll();
 
     Hunting getById(Long id);
 
-    List<Hunting> getByCompetition(String competition);
+    List<Hunting> getByCompetition(String code);
 
-    List<Hunting> getByMember(String member);
+    List<Hunting> getByMember(Integer member);
 
-    List<Hunting> getByCompetitionAndMember(String competition, String member);
+    List<Hunting> getByCompetitionAndMember(String competition, Integer member);
 
     Hunting update(Hunting hunting, Long id);
 

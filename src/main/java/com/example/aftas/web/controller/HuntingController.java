@@ -2,6 +2,7 @@ package com.example.aftas.web.controller;
 
 import com.example.aftas.domain.Hunting;
 import com.example.aftas.dto.requests.HuntingRequestDTO;
+import com.example.aftas.dto.requests.UpdateHuntingRequestDTO;
 import com.example.aftas.dto.responses.HuntingResponseDTO;
 import com.example.aftas.handler.response.ResponseMessage;
 import com.example.aftas.service.HuntingService;
@@ -34,7 +35,7 @@ public class HuntingController {
     }
 
     @GetMapping("/member/{member}")
-    public ResponseEntity getHuntingByMember(@PathVariable String member){
+    public ResponseEntity getHuntingByMember(@PathVariable Integer member){
         List<Hunting> hunts = huntingService.getByMember(member);
         if(hunts == null) return ResponseMessage.notFound("Hunting not found");
         else return ResponseMessage.ok("Success", hunts.stream().map(HuntingResponseDTO::fromHunting).toList());
@@ -48,7 +49,7 @@ public class HuntingController {
     }
 
     @GetMapping("/competition_and_member/{competition}/{member}")
-    public ResponseEntity getHuntingByCompetitionAndMember(@PathVariable String competition, @PathVariable String member){
+    public ResponseEntity getHuntingByCompetitionAndMember(@PathVariable String competition, @PathVariable Integer member){
         List<Hunting> hunts = huntingService.getByCompetitionAndMember(competition, member);
         if(hunts == null) return ResponseMessage.notFound("Hunting not found");
         else return ResponseMessage.ok("Success", hunts.stream().map(HuntingResponseDTO::fromHunting).toList());
@@ -56,14 +57,13 @@ public class HuntingController {
 
     @PostMapping
     public ResponseEntity save(@RequestBody @Valid HuntingRequestDTO hunting){
-        System.out.println("hi");
-        Hunting hunting1 = huntingService.save(hunting.toHunting());
+        Hunting hunting1 = huntingService.save(hunting.toHunting(), hunting.weight());
         if (hunting1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Hunting created successfully", HuntingResponseDTO.fromHunting(hunting1));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody HuntingRequestDTO hunting, @PathVariable Long id){
+    public ResponseEntity update(@RequestBody UpdateHuntingRequestDTO hunting, @PathVariable Long id){
         Hunting hunting1 = huntingService.update(hunting.toHunting(), id);
         if (hunting1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Hunting updated successfully", HuntingResponseDTO.fromHunting(hunting1));

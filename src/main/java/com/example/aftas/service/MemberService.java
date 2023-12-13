@@ -22,6 +22,8 @@ public interface MemberService {
 
     List<Member> getByIdentityNumber(String identityNumber);
 
+    Member getByNumber(Integer number);
+
     List<Member> getByNameOrFamilyNameOrNumber(String searchParam);
 
 }
