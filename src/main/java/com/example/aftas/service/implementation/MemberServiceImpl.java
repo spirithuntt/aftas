@@ -2,9 +2,11 @@ package com.example.aftas.service.implementation;
 
 import com.example.aftas.domain.Member;
 import com.example.aftas.service.MemberService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class MemberServiceImpl implements MemberService {
     @Override
     public Member save(Member member) {

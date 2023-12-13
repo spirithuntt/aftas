@@ -5,6 +5,7 @@ import com.example.aftas.dto.requests.CompetitionRequestDTO;
 import com.example.aftas.dto.responses.CompetitionResponseDTO;
 import com.example.aftas.handler.response.ResponseMessage;
 import com.example.aftas.service.CompetitionService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +42,7 @@ public class CompetitionController {
     }
 
     @PostMapping
-    public ResponseEntity save(@RequestBody CompetitionRequestDTO competition){
+    public ResponseEntity save(@RequestBody @Valid CompetitionRequestDTO competition){
         Competition competition1 = competitionService.save(competition.toCompetition());
         if (competition1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Competition created successfully", CompetitionResponseDTO.fromCompetition(competition1));
