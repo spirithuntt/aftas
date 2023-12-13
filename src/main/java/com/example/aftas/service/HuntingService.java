@@ -25,7 +25,7 @@ public interface HuntingService {
 
     Hunting update(Hunting hunting, Long id);
 
-    void checkIfFishAlreadyHunted(Member member, Competition competition, Fish fish);
+    Hunting checkIfFishAlreadyHunted(Member member, Competition competition, Fish fish);
 
     void delete(Long id);
 

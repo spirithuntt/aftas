@@ -31,6 +31,7 @@ public class Hunting {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Competition competition;
 
+    @Column(columnDefinition = "integer default 1")
     private Integer numberOfFish;
 
 }

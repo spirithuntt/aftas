@@ -14,7 +14,7 @@ public interface FishService {
 
     Fish getByName(String name);
 
-    List<Fish> getByLevel(Integer code);
+    List<Fish> getByLevel(Integer level);
 
     Fish getById(Long id);
 

@@ -5,6 +5,7 @@ import com.example.aftas.dto.requests.HuntingRequestDTO;
 import com.example.aftas.dto.responses.HuntingResponseDTO;
 import com.example.aftas.handler.response.ResponseMessage;
 import com.example.aftas.service.HuntingService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/huntings")
+@RequestMapping("/api/v1/hunting")
 public class HuntingController {
 
     private final HuntingService huntingService;
@@ -54,7 +55,8 @@ public class HuntingController {
     }
 
     @PostMapping
-    public ResponseEntity save(@RequestBody HuntingRequestDTO hunting){
+    public ResponseEntity save(@RequestBody @Valid HuntingRequestDTO hunting){
+        System.out.println("hi");
         Hunting hunting1 = huntingService.save(hunting.toHunting());
         if (hunting1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Hunting created successfully", HuntingResponseDTO.fromHunting(hunting1));
