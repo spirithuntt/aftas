@@ -19,7 +19,7 @@ public class RankId implements Serializable {
     @Column(name = "member_id")
     private Long memberId;
 
-    @Column(name = "competition_code")
-    private Long competitionCode;
+    @Column(name = "competition_id")
+    private Long competitionId;
 
 }

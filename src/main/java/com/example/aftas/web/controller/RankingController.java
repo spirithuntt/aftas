@@ -1,5 +1,8 @@
 package com.example.aftas.web.controller;
 
+import com.example.aftas.domain.Competition;
+import com.example.aftas.domain.Member;
+import com.example.aftas.domain.RankId;
 import com.example.aftas.domain.Ranking;
 import com.example.aftas.dto.requests.RegisterMemberRequestDTO;
 import com.example.aftas.dto.responses.RankingResponseDTO;
@@ -13,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/rankings")
+@RequestMapping("/api/v1/ranking")
 public class RankingController {
 
     private final RankingService rankingService;
@@ -26,14 +29,14 @@ public class RankingController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getRankingById(@PathVariable Long id){
+    public ResponseEntity getRankingById(@PathVariable RankId id){
         Ranking ranking = rankingService.getById(id);
         if(ranking == null) return ResponseMessage.notFound("Ranking not found");
         else return ResponseMessage.ok("Success", RankingResponseDTO.fromRanking(ranking));
     }
 
     @GetMapping("member/{member}")
-    public ResponseEntity getRankingByMember(@PathVariable String member){
+    public ResponseEntity getRankingByMember(@PathVariable Integer member){
         List<Ranking> rankings = rankingService.getByMember(member);
         if(rankings.isEmpty()) return ResponseMessage.notFound("No ranking was found");
         else return ResponseMessage.ok("Success", rankings.stream().map(RankingResponseDTO::fromRanking).toList());
@@ -41,13 +44,13 @@ public class RankingController {
 
     @GetMapping("competition/{competition}")
     public ResponseEntity getRankingByCompetition(@PathVariable String competition){
-        List<Ranking> rankings = rankingService.getByCompetition(competition);
+        List<Ranking> rankings = rankingService.sortParticipantsByScore(competition);
         if(rankings.isEmpty()) return ResponseMessage.notFound("Ranking not found");
         else return ResponseMessage.ok("Success", rankings.stream().map(RankingResponseDTO::fromRanking).toList());
     }
 
     @GetMapping("member_and_competition/{member}/{competition}")
-    public ResponseEntity getRankingByMemberAndCompetition(@PathVariable String member, @PathVariable String competition){
+    public ResponseEntity getRankingByMemberAndCompetition(@PathVariable Integer member, @PathVariable String competition){
         Ranking ranking = rankingService.getByMemberAndCompetition(member, competition);
         if(ranking == null) return ResponseMessage.notFound("Ranking not found");
         else return ResponseMessage.ok("Success", RankingResponseDTO.fromRanking(ranking));
@@ -61,19 +64,17 @@ public class RankingController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody RegisterMemberRequestDTO ranking, @PathVariable Long id){
-        Ranking ranking1 = rankingService.update(ranking.toRanking(), id);
+    public ResponseEntity update(@RequestBody RegisterMemberRequestDTO ranking){
+        Ranking ranking1 = rankingService.update(ranking.toRanking());
         if (ranking1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Ranking updated successfully", RankingResponseDTO.fromRanking(ranking1));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable Long id){
-        Ranking ranking = rankingService.getById(id);
-        if (ranking == null) return ResponseMessage.notFound("Ranking not found");
-        else {
-            rankingService.delete(id);
-            return ResponseMessage.ok("Ranking deleted successfully", RankingResponseDTO.fromRanking(ranking));
-        }
+    @DeleteMapping("/{competition}/{member}")
+    public ResponseEntity delete(@PathVariable("competition") Long competition, @PathVariable("member") Long member){
+        Ranking ranking=new Ranking();
+        ranking.setId(new RankId(member, competition));
+        rankingService.delete(ranking);
+        return ResponseMessage.ok("Ranking deleted successfully", RankingResponseDTO.fromRanking(ranking));
     }
 }

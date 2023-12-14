@@ -1,14 +1,8 @@
 package com.example.aftas.service.implementation;
 
-import com.example.aftas.domain.Competition;
-import com.example.aftas.domain.Fish;
-import com.example.aftas.domain.Hunting;
-import com.example.aftas.domain.Member;
+import com.example.aftas.domain.*;
 import com.example.aftas.repository.HuntingRepository;
-import com.example.aftas.service.CompetitionService;
-import com.example.aftas.service.FishService;
-import com.example.aftas.service.HuntingService;
-import com.example.aftas.service.MemberService;
+import com.example.aftas.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,14 +16,18 @@ public class HuntingServiceImpl implements HuntingService {
     private final FishService fishService;
     private final CompetitionService competitionService;
     private final MemberService memberService;
+    private final RankingService rankingService;
 
     @Override
     public Hunting save(Hunting hunting, Double weight) {
         hunting.setFish(fishService.getByName(hunting.getFish().getName()));
-        if (weight >= hunting.getFish().getAverageWeight()){
+        Ranking ranking = rankingService.getByMemberAndCompetition(hunting.getMember().getNumber(), hunting.getCompetition().getCode());
+        if (weight >= hunting.getFish().getAverageWeight() && ranking != null){
             hunting.setCompetition(competitionService.getByCode(hunting.getCompetition().getCode()));
             hunting.setMember(memberService.getByNumber(hunting.getMember().getNumber()));
             Hunting existingHunt = checkIfFishAlreadyHunted(hunting.getMember(), hunting.getCompetition(), hunting.getFish());
+            ranking.setScore(ranking.getScore() + hunting.getFish().getLevel().getPoints());
+            rankingService.update(ranking);
             if(existingHunt == null){
                 hunting.setNumberOfFish(1);
                 return huntingRepository.save(hunting);
@@ -77,8 +75,10 @@ public class HuntingServiceImpl implements HuntingService {
 
     @Override
     public Hunting checkIfFishAlreadyHunted(Member member, Competition competition, Fish fish) {
-        if (getAll().isEmpty()) return null;
-        return getAll().stream().filter(hunting -> hunting.getMember().equals(member) && hunting.getCompetition().equals(competition) && hunting.getFish().equals(fish)).toList().get(0);
+        List<Hunting> allHunts = getAll();
+        if (allHunts.isEmpty()) return null;
+        List<Hunting> hunts = allHunts.stream().filter(hunting -> hunting.getMember().equals(member) && hunting.getCompetition().equals(competition) && hunting.getFish().equals(fish)).toList();
+        return hunts.isEmpty() ? null : hunts.get(0);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.example.aftas.service;
 
 import com.example.aftas.domain.Competition;
 import com.example.aftas.domain.Member;
+import com.example.aftas.domain.RankId;
 import com.example.aftas.domain.Ranking;
 import org.springframework.stereotype.Component;
 
@@ -14,16 +15,18 @@ public interface RankingService {
 
     List<Ranking>getAll();
 
-    Ranking getById(Long id);
+    Ranking getById(RankId id);
 
-    List<Ranking> getByMember(String member);
+    List<Ranking> getByMember(Integer member);
 
     List<Ranking> getByCompetition(String competition);
 
-    Ranking getByMemberAndCompetition(String member, String competition);
+    Ranking getByMemberAndCompetition(Integer member, String competition);
 
-    Ranking update(Ranking ranking, Long id);
+    Ranking update(Ranking ranking);
 
-    void delete(Long id);
+    List<Ranking> sortParticipantsByScore(String competition);
+
+    void delete(Ranking ranking);
 
 }
