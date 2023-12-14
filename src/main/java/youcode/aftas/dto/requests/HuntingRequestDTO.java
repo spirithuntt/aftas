@@ -1,21 +1,30 @@
 package youcode.aftas.dto.requests;
 
 import jakarta.validation.constraints.NotNull;
+import youcode.aftas.domain.Competition;
 import youcode.aftas.domain.Fish;
 import youcode.aftas.domain.Hunting;
 import youcode.aftas.domain.Member;
 
 public record HuntingRequestDTO(
-        @NotNull(message = "Code can not be null")
-        Integer numberOfFish,
-        @NotNull(message = "Code can not be null")
-        Member member,
-        @NotNull(message = "Code can not be null")
-        Fish fish
+        @NotNull(message = "member can not be null")
+        Long member,
+        @NotNull(message = "fish can not be null")
+        Long fish,
+        @NotNull(message = "competition can not be null")
+        Long competition,
+
+        @NotNull(message = "weight can not be null")
+        Double weight
+
 ){
-            public Hunting toHunting() {
-                Hunting.HuntingBuilder huntingBuilder = new Hunting().builder()
-                        .numberOfFish(numberOfFish);
-                return huntingBuilder.build();
-            }
+    public Hunting toHunting() {
+        return Hunting.builder()
+                .competition(Competition.builder().id(competition).build())
+                .member(Member.builder().id(member).build())
+                .fish(Fish.builder().id(fish)
+                        .averageWeight(weight)
+                        .build())
+                .build();
+    }
 }

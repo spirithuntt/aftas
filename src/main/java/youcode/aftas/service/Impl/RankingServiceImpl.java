@@ -4,17 +4,25 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import youcode.aftas.domain.Competition;
 import youcode.aftas.domain.Member;
+import youcode.aftas.domain.RankId;
 import youcode.aftas.domain.Ranking;
+import youcode.aftas.dto.requests.RegistrationRequestDTO;
 import youcode.aftas.repository.RankingRepository;
+import youcode.aftas.service.CompetitionService;
+import youcode.aftas.service.MemberService;
 import youcode.aftas.service.RankingService;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 @Component
 @RequiredArgsConstructor
 public class RankingServiceImpl implements RankingService {
-    private final RankingRepository rankingRepository;
+    private  final RankingRepository rankingRepository;
+    private  final MemberService memberService;
+
+
 
     @Override
     public void addPointsAndRank(Member member, Competition competition, int points, int numberOfFish){
@@ -60,7 +68,7 @@ public class RankingServiceImpl implements RankingService {
     }
 
     @Override
-    public Ranking getRankingById(Long id) {
+    public Ranking getRankingById(RankId id) {
         return rankingRepository.findById(id).orElseThrow(() -> new RuntimeException("Ranking not found"));
     }
 
@@ -70,8 +78,47 @@ public class RankingServiceImpl implements RankingService {
     }
 
     @Override
-    public void deleteRanking(Long id) {
-        rankingRepository.deleteById(id);
+    public void deleteRanking(Ranking ranking) {
+        rankingRepository.delete(ranking);
+    }
+
+        @Override
+        public boolean isRegistrationAllowed(Member member, Competition competition) {
+            System.out.println("-------------------------" + member.getName());
+
+            if (member.getAccessDate() == null) {
+                return false;
+            }
+            LocalDateTime accessDateTime = member.getAccessDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+            LocalDateTime competitionStartDateTime = competition.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+
+            Duration duration = Duration.between(accessDateTime, competitionStartDateTime);
+            return duration.toHours() >= 24;
+        }
+
+        @Override
+        public boolean isUserAlreadyRegistered(Member member, Competition competition) {
+            return rankingRepository.existsByMemberAndCompetition(member, competition);
+        }
+
+
+
+        @Override
+        public int countByParticipantsId(Long competitionId) {
+            return rankingRepository.countByParticipantsId(competitionId);
+        }
+
+    @Override
+    public Integer countByCompetitionId(Long competitionId) {
+        return rankingRepository.countByCompetitionId(competitionId);
+    }
+    @Override
+    public Ranking getRankingByCompetitionIdAndMemberId(Long competitionId, Long memberId) {
+        return rankingRepository.getRankingByCompetitionIdAndMemberId(competitionId, memberId);
     }
 
 }
+
+
+
+

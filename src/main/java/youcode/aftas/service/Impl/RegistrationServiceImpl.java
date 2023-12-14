@@ -5,51 +5,48 @@ import org.springframework.stereotype.Component;
 import youcode.aftas.domain.Competition;
 import youcode.aftas.domain.Member;
 import youcode.aftas.domain.Ranking;
+import youcode.aftas.domain.RankId;
+import youcode.aftas.dto.requests.RegistrationRequestDTO;
 import youcode.aftas.repository.RankingRepository;
+import youcode.aftas.service.CompetitionService;
+import youcode.aftas.service.MemberService;
 import youcode.aftas.service.RegistrationService;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-
-@RequiredArgsConstructor
 @Component
+@RequiredArgsConstructor
 public class RegistrationServiceImpl implements RegistrationService {
 
-        private final RankingRepository rankingRepository;
+    private final MemberService  memberService;
+    private final CompetitionService competitionService;
+    private final RankingRepository rankingRepository;
+    @Override
+    public Ranking registerUserInCompetition(RegistrationRequestDTO registrationRequestDTO) {
+        Member member = memberService.getMemberById(registrationRequestDTO.member());
 
-        @Override
-        public boolean isRegistrationAllowed(Member member, Competition competition) {
-            LocalDateTime accessDateTime = member.getAccessDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-            LocalDateTime competitionStartDateTime = competition.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-
-            Duration duration = Duration.between(accessDateTime, competitionStartDateTime);
-            return duration.toHours() >= 24;
+        if(member == null){
+            throw new IllegalArgumentException();
+        }
+        Competition competition = competitionService.getCompetitionById(registrationRequestDTO.competition());
+        if(competition == null){
+            throw new IllegalArgumentException();
+        }
+        if(!competitionService.isCompetitionAvailableForRegistration(competition.getId())){
+            throw new IllegalArgumentException();
         }
 
-        @Override
-        public boolean isUserAlreadyRegistered(Member member, Competition competition) {
-            return rankingRepository.existsByMemberAndCompetition(member, competition);
+        if (rankingRepository.existsByMemberAndCompetition(member, competition)) {
+            throw new RuntimeException("User already registered");
         }
-
-
-        @Override
-        public void registerUser(Member member, Competition competition) {
-            if (!isRegistrationAllowed(member, competition))
-                throw new RuntimeException("Registration is not allowed");
-            if (isUserAlreadyRegistered(member, competition))
-                throw new RuntimeException("User is already registered");
-            if (countByParticipantsId(competition.getId()) >= competition.getNumberOfParticipants())
-                throw new RuntimeException("Competition is full");
-            Ranking ranking = new Ranking();
-            ranking.setMember(member);
-            ranking.setCompetition(competition);
-            rankingRepository.save(ranking);
-        }
-
-        @Override
-        public int countByParticipantsId(Long competitionId) {
-            return rankingRepository.countByParticipantsId(competitionId);
-        }
+        Ranking ranking = Ranking.builder()
+                .id(RankId.builder()
+                        .competitionId(competition.getId())
+                        .memberId(member.getId())
+                        .build())
+                .rank(0)
+                .competition(competition)
+                .member(member)
+                .score(0)
+                .build();
+        return rankingRepository.save(ranking);
     }
-
+}

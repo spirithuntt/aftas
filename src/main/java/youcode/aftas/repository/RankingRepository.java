@@ -7,12 +7,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import youcode.aftas.domain.Competition;
 import youcode.aftas.domain.Member;
+import youcode.aftas.domain.RankId;
 import youcode.aftas.domain.Ranking;
 
 import java.util.List;
 
 @Repository
-public interface RankingRepository extends JpaRepository<Ranking, Long>{
+public interface RankingRepository extends JpaRepository<Ranking, RankId> {
 
     boolean existsByMemberAndCompetition(Member member, Competition competition);
 
@@ -28,5 +29,9 @@ public interface RankingRepository extends JpaRepository<Ranking, Long>{
     int countByParticipantsId(@Param("competitionId") Long competitionId);
 
     Ranking findByMemberIdAndCompetitionId(Long memberId, Long competitionId);
+
+    Integer countByCompetitionId(Long competitionId);
+
+    Ranking getRankingByCompetitionIdAndMemberId(Long competitionId, Long memberId);
 
 }

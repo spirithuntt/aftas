@@ -6,6 +6,7 @@ import youcode.aftas.domain.Competition;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CompetitionRepository extends JpaRepository<Competition, Long> {

@@ -7,7 +7,7 @@ import youcode.aftas.domain.Member;
 
 @Service
 public interface HuntingService {
-    Hunting insertHunting(Fish fish, Member member);
+    Hunting insertHunting(Hunting hunting, Double weight);
 
     Hunting getHuntingById(Long id);
 

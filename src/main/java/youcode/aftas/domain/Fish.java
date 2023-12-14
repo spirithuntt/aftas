@@ -31,13 +31,6 @@ public class Fish {
 
     @ManyToOne
     private Level level;
-    
 
-    /*{
-        "name": "fish",
-        "averageWeight": 2.5,
-        "level": {
-            "id": 1
-        }
-    }*/
+
 }

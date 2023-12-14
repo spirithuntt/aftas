@@ -5,6 +5,7 @@ import youcode.aftas.domain.Competition;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface CompetitionService {
@@ -21,5 +22,7 @@ public interface CompetitionService {
     void deleteCompetition(Long id);
 
     List<Competition> getAllCompetitions();
+
+    Boolean isCompetitionAvailableForRegistration(Long id);
 
 }

@@ -1,18 +1,22 @@
 package youcode.aftas.dto.requests;
 
+import jakarta.validation.constraints.NotNull;
 import youcode.aftas.domain.Competition;
 import youcode.aftas.domain.Member;
 import youcode.aftas.domain.Ranking;
 
 public record RegistrationRequestDTO(
-        Member member,
-        Competition competition
+
+        @NotNull
+        Long member,
+        @NotNull
+        Long competition
 )
 {
     public Ranking toRanking() {
         return Ranking.builder()
-                .member(member)
-                .competition(competition)
+                .competition(Competition.builder().id(competition).build())
+                .member(Member.builder().id(member).build())
                 .build();
     }
 }

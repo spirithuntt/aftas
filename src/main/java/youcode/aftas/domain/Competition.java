@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import jakarta.validation.constraints.Pattern;
 
 import java.sql.Time;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -32,12 +33,12 @@ public class Competition {
 
     private Date date;
 
+
     private Time startTime;
 
     private Time endTime;
 
-    @NotNull(message = "Number of participants can not be null")
-    private Integer numberOfParticipants;
+    private int numberOfParticipants;
 
     @NotNull(message = "Location can not be null")
     @Size(min = 1, max = 20, message = "Location must be between 3 and 20 characters")
@@ -53,15 +54,5 @@ public class Competition {
     @OneToMany(mappedBy = "competition")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Hunting> hunting;
-/*
-    {
-        "code": "ims-22-12-23",
-        "date": "2021-12-23",
-        "startTime": "12:00:00",
-        "endTime": "12:00:00",
-        "numberOfParticipants": 10,
-        "location": "Imsouane",
-        "amount": 1000
-    }
- */
+
 }

@@ -1,17 +1,74 @@
 package youcode.aftas.controller;
 
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import youcode.aftas.domain.Competition;
 import youcode.aftas.dto.requests.CompetitionRequestDTO;
+import youcode.aftas.handler.response.ResponseMessage;
+import youcode.aftas.service.CompetitionService;
 
-public interface CompetitionController {
-    ResponseEntity<?> getCompetitionById(Long id);
+import java.util.List;
 
-    ResponseEntity<?> getAllCompetitions();
+@RestController
+@RequestMapping("/api/competitions")
+@RequiredArgsConstructor
+public class CompetitionController {
 
-    //createCompetition
-    ResponseEntity<?> createCompetition(CompetitionRequestDTO competitionRequestDTO);
+    private final CompetitionService competitionService;
 
-    ResponseEntity<?> updateCompetition(CompetitionRequestDTO competitionRequestDTO, Long id);
 
-    ResponseEntity<?> deleteCompetition(Long id);
+    @GetMapping("/{id}")
+    public ResponseEntity getCompetitionById(@PathVariable Long id) {
+        Competition competition = competitionService.getCompetitionById(id);
+        if(competition == null) {
+            return ResponseMessage.notFound("Competition not found");
+        }else {
+            return ResponseMessage.ok("Success", competition);
+        }
+    }
+
+        @GetMapping
+        public ResponseEntity getAllCompetitions() {
+        List<Competition> competitions = competitionService.getAllCompetitions();
+        if(competitions.isEmpty()) {
+            return ResponseMessage.notFound("Competition not found");
+        }else {
+            return ResponseMessage.ok("Success", competitions);
+        }
+    }
+
+
+    @PostMapping
+    public ResponseEntity createCompetition(@Valid @RequestBody CompetitionRequestDTO competitionRequestDTO) {
+        Competition competition1 = competitionService.createCompetition(competitionRequestDTO.toCompetition());
+        if(competition1 == null) {
+            return ResponseMessage.badRequest("Competition not created");
+        }else {
+            return ResponseMessage.created("Competition created successfully", competition1);
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity updateCompetition(@RequestBody CompetitionRequestDTO competitionRequestDTO, @PathVariable Long id) {
+        Competition competition1 = competitionService.updateCompetition(competitionRequestDTO.toCompetition(), id);
+        if(competition1 == null) {
+            return ResponseMessage.badRequest("Competition not updated");
+        }else {
+            return ResponseMessage.created("Competition updated successfully", competition1);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteCompetition(@PathVariable Long id) {
+        Competition competition = competitionService.getCompetitionById(id);
+        if(competition == null) {
+            return ResponseMessage.notFound("Competition not found");
+        }else {
+            competitionService.deleteCompetition(id);
+            return ResponseMessage.ok("Competition deleted successfully", null);
+        }
+    }
+
 }
