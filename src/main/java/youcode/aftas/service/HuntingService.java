@@ -11,7 +11,7 @@ public interface HuntingService {
 
     Hunting getHuntingById(Long id);
 
-    Hunting updateHunting(Hunting hunting);
+    Hunting updateHunting(Hunting hunting, Long id);
 
     void deleteHunting(Long id);
 

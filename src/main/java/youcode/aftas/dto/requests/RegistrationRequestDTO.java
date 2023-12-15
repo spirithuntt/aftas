@@ -7,9 +7,9 @@ import youcode.aftas.domain.Ranking;
 
 public record RegistrationRequestDTO(
 
-        @NotNull
+        @NotNull(message = "member can not be null")
         Long member,
-        @NotNull
+        @NotNull(message = "competition can not be null")
         Long competition
 )
 {

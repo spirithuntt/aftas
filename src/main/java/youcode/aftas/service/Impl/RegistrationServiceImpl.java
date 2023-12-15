@@ -7,6 +7,7 @@ import youcode.aftas.domain.Member;
 import youcode.aftas.domain.Ranking;
 import youcode.aftas.domain.RankId;
 import youcode.aftas.dto.requests.RegistrationRequestDTO;
+import youcode.aftas.repository.CompetitionRepository;
 import youcode.aftas.repository.RankingRepository;
 import youcode.aftas.service.CompetitionService;
 import youcode.aftas.service.MemberService;
@@ -19,10 +20,11 @@ public class RegistrationServiceImpl implements RegistrationService {
     private final MemberService  memberService;
     private final CompetitionService competitionService;
     private final RankingRepository rankingRepository;
+    private final CompetitionRepository competitionRepository;
+
     @Override
     public Ranking registerUserInCompetition(RegistrationRequestDTO registrationRequestDTO) {
         Member member = memberService.getMemberById(registrationRequestDTO.member());
-
         if(member == null){
             throw new IllegalArgumentException();
         }
@@ -42,7 +44,7 @@ public class RegistrationServiceImpl implements RegistrationService {
                         .competitionId(competition.getId())
                         .memberId(member.getId())
                         .build())
-                .rank(0)
+                .rank(rankingRepository.countByParticipantsId(competition.getId()) + 1)
                 .competition(competition)
                 .member(member)
                 .score(0)

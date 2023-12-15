@@ -8,4 +8,6 @@ import youcode.aftas.domain.Hunting;
 public interface HuntingRepository extends JpaRepository<Hunting, Long>{
     Hunting findByFishIdAndMemberId(Long fishId, Long memberId);
     Hunting findById(long id);
+
+    Hunting findByCompetitionIdAndMemberIdAndFishId(Long competitionId, Long memberId, Long fishId);
 }

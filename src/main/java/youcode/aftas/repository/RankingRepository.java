@@ -22,8 +22,8 @@ public interface RankingRepository extends JpaRepository<Ranking, RankId> {
     @Query("SELECT COUNT(r) + 1 FROM Ranking r WHERE r.member.id = :memberId AND r.competition.id = :competitionId AND r.score > :score")
     int calculateRankForMember(@Param("memberId") Long memberId, @Param("competitionId") Long competitionId, @Param("score") int score);
 
-    @Query("SELECT r FROM Ranking r WHERE r.competition.id = :competitionId ORDER BY r.score DESC LIMIT 3")
-    List<Ranking> findPodiumRankingsByCompetitionId(@Param("competitionId") Long competitionId);
+    List<Ranking> findTop3ByCompetitionIdOrderByScoreDesc(Long competitionId);
+
 
     @Query("SELECT COUNT(r) FROM Ranking r WHERE r.competition.id = :competitionId")
     int countByParticipantsId(@Param("competitionId") Long competitionId);
@@ -34,4 +34,6 @@ public interface RankingRepository extends JpaRepository<Ranking, RankId> {
 
     Ranking getRankingByCompetitionIdAndMemberId(Long competitionId, Long memberId);
 
+    @Query("SELECT COUNT(r) FROM Ranking r")
+    int countByNumberOfParticipants();
 }

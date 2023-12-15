@@ -12,24 +12,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LevelServiceImpl implements LevelService {
     private final LevelRepository levelRepository;
- /*   @Override
-    public Level addLevel(Integer shootingLevel, String Description, Integer points) {
-        if (levelRepository.existsByShootingLevel(shootingLevel) && levelRepository.existsByPoints(points)) {
-            throw new RuntimeException("Level already exists");
-        } else if (levelRepository.existsByShootingLevel(shootingLevel) && levelRepository.existsByPointsGreaterThanEqual(points)) {
-            throw new RuntimeException("Points should be higher than the previous level");
-        } else if (levelRepository.existsByShootingLevel(shootingLevel) && levelRepository.existsByPointsLessThanEqual(points)) {
-            throw new RuntimeException("Points should be lower than the previous level");
-        }
-            Level level = new Level();
-            level.setShootingLevel(shootingLevel);
-            level.setDescription(Description);
-            level.setPoints(points);
-            return levelRepository.save(level);
-
-    }
-
-  */
  @Override
  public Level addLevel(Level level) {
      Level levels = levelRepository.findAll().stream().max((l1, l2) -> l1.getPoints() > l2.getPoints() ? 1 : -1).orElse(null);

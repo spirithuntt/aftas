@@ -2,13 +2,8 @@ package youcode.aftas.service.Impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import youcode.aftas.domain.Competition;
-import youcode.aftas.domain.Fish;
-import youcode.aftas.domain.Hunting;
-import youcode.aftas.domain.Member;
-import youcode.aftas.repository.FishRepository;
+import youcode.aftas.domain.*;
 import youcode.aftas.repository.HuntingRepository;
-import youcode.aftas.repository.MemberRepository;
 import youcode.aftas.service.*;
 
 @Component
@@ -22,42 +17,48 @@ public class HuntingServiceImpl implements HuntingService {
 
     @Override
     public Hunting insertHunting(Hunting hunting, Double weight) {
-
-        Fish fish = hunting.getFish();
-        Member member = hunting.getMember();
-        Competition competition = hunting.getCompetition();
-
-        Fish fish1 = fishService.getFishById(fish.getId());
-        Member member1 = memberService.getMemberById(member.getId());
-        Competition competition1 = competitionService.getCompetitionById(competition.getId());
-        if (fish1 == null) {
-            throw new RuntimeException("Fish not found");
-        }
-        else if (member1 == null) {
-            throw new RuntimeException("Member not found");
-        }
-        else if (competition1 == null) {
-            throw new RuntimeException("Competition not found");
-        }
-        else if (rankingService.getRankingByCompetitionIdAndMemberId(competition.getId(), member.getId()) == null) {
+        Long competitionId = hunting.getCompetition().getId();
+        Long memberId = hunting.getMember().getId();
+        Long fishId = hunting.getFish().getId();
+        Competition competition = competitionService.getCompetitionById(competitionId);
+        Member member = memberService.getMemberById(memberId);
+        Fish fish = fishService.getFishById(fishId);
+        if (rankingService.getRankingByCompetitionIdAndMemberId(competitionId, memberId) == null) {
             throw new RuntimeException("Member not found in this competition");
         }
-        else if (fish1.getAverageWeight() > weight) {
-            throw new RuntimeException("Weight is too low it will not be saved");
-        }
-        Hunting hunting1 = huntingRepository.findByFishIdAndMemberId(fish.getId(), member.getId());
 
-        if (hunting1 == null) {
-            hunting1 = new Hunting();
-            hunting1.setFish(fish);
-            hunting1.setMember(member);
-            hunting1.setNumberOfFish(1);
+        if (fish.getLevel() == null) {
+            throw new RuntimeException("Fish must have level");
+        }
+        if (hunting.getFish().getAverageWeight() < fish.getAverageWeight()) {
+            throw new RuntimeException("Weight of fish must be greater than average weight");
+        }
+        Hunting existingHunting = huntingRepository.findByCompetitionIdAndMemberIdAndFishId(competitionId, memberId, fishId);
+
+
+        Ranking ranking = rankingService.getRankingByCompetitionIdAndMemberId(competitionId, memberId);
+        if (ranking != null) {
+            ranking.setScore(ranking.getScore() + fish.getLevel().getPoints());
+            rankingService.updateRanking(ranking, ranking.getId());
         }
         else {
-            hunting1.setNumberOfFish(hunting1.getNumberOfFish() + 1);
+            ranking = new Ranking();
+            ranking.setMember(member);
+            ranking.setCompetition(competition);
+            ranking.setScore(fish.getLevel().getPoints());
+            ranking.setRank(rankingService.countByParticipantsId(competitionId) + 1);
+            rankingService.updateRanking(ranking, ranking.getId());
         }
+        ranking.setScore(ranking.getScore() + fish.getLevel().getPoints());
+        rankingService.updateRanking(ranking, ranking.getId());
 
-        return huntingRepository.save(hunting1);
+        if(existingHunting != null) {
+            existingHunting.setNumberOfFish(existingHunting.getNumberOfFish() + 1);
+            return huntingRepository.save(existingHunting);
+        } else {
+            hunting.setNumberOfFish(1);
+            return huntingRepository.save(hunting);
+        }
     }
     @Override
     public Hunting getHuntingById(Long id) {
@@ -67,17 +68,13 @@ public class HuntingServiceImpl implements HuntingService {
 
 
     @Override
-    public Hunting updateHunting(Hunting hunting) {
-        Hunting huntingToUpdate = huntingRepository.findById(hunting.getId());
-
-        if (huntingToUpdate == null) {
-            throw new RuntimeException("Hunting not found");
-        } else {
-            huntingToUpdate.setFish(hunting.getFish());
-            huntingToUpdate.setMember(hunting.getMember());
-            huntingToUpdate.setNumberOfFish(hunting.getNumberOfFish());
-            return huntingRepository.save(huntingToUpdate);
-        }
+    public Hunting updateHunting(Hunting hunting, Long id) {
+        Hunting existingHunting = getHuntingById(id);
+        existingHunting.setFish(hunting.getFish());
+        existingHunting.setMember(hunting.getMember());
+        existingHunting.setCompetition(hunting.getCompetition());
+        existingHunting.setNumberOfFish(hunting.getNumberOfFish());
+        return huntingRepository.save(existingHunting);
     }
 
     @Override
