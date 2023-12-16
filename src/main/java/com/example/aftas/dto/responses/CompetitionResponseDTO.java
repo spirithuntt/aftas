@@ -3,23 +3,24 @@ package com.example.aftas.dto.responses;
 import com.example.aftas.domain.Competition;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public record CompetitionResponseDTO(
         String code,
         LocalDate date,
-        LocalTime startTime,
-        LocalTime endTime,
+        String startTime,
+        String endTime,
         Integer numberOfParticipants,
         String location,
         Double amount
 ) {
     public static CompetitionResponseDTO fromCompetition(Competition competition) {
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm");
         return new CompetitionResponseDTO(
                 competition.getCode(),
                 competition.getDate(),
-                competition.getStartTime(),
-                competition.getEndTime(),
+                competition.getStartTime().format(timeFormatter),
+                competition.getEndTime().format(timeFormatter),
                 competition.getNumberOfParticipants(),
                 competition.getLocation(),
                 competition.getAmount()
