@@ -15,7 +15,7 @@ public record CompetitionResponseDTO(
         Double amount
 ) {
     public static CompetitionResponseDTO fromCompetition(Competition competition) {
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
         return new CompetitionResponseDTO(
                 competition.getCode(),
                 competition.getDate(),

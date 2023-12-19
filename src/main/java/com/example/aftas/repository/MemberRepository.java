@@ -21,7 +21,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Member getMemberByNumber(Integer number);
 
     @Query(value =
-            "SELECT * FROM member WHERE number = :searchTerm " +
+            "SELECT * FROM member WHERE number LIKE %:searchTerm% " +
                     "OR name LIKE %:searchTerm% OR family_name LIKE %:searchTerm%", nativeQuery = true)
     List<Member> findByNumberOrFirstNameOrLastName(@Param("searchTerm") String searchTerm);
 
