@@ -1,6 +1,8 @@
 package com.example.aftas.service;
 
 import com.example.aftas.domain.Competition;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -16,6 +18,8 @@ public interface CompetitionService {
     String generateCode(LocalDate date, String location);
 
     List<Competition> getAll();
+
+    Page<Competition> getAll(Pageable pageable);
 
     Competition getById(Long id);
 

@@ -3,15 +3,18 @@ package com.example.aftas.web.controller;
 import com.example.aftas.domain.Competition;
 import com.example.aftas.dto.requests.CompetitionRequestDTO;
 import com.example.aftas.dto.responses.CompetitionResponseDTO;
+import com.example.aftas.dto.responses.PaginationResponseDTO;
 import com.example.aftas.handler.response.ResponseMessage;
 import com.example.aftas.service.CompetitionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -46,6 +49,15 @@ public class CompetitionController {
         Competition competition1 = competitionService.save(competition.toCompetition());
         if (competition1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Competition created successfully", CompetitionResponseDTO.fromCompetition(competition1));
+    }
+
+    @PostMapping("/page")
+    public ResponseEntity getAllCompetitions(@RequestParam(defaultValue = "0") int page , @RequestParam(defaultValue = "8") int size){
+        Pageable paginating = PageRequest.of(page,size);
+        Page<Competition> competitionPage=competitionService.getAll(paginating);
+
+        if (competitionPage == null) return ResponseMessage.badRequest("bad request");
+        else return ResponseMessage.created("Competition created successfully", new PaginationResponseDTO(competitionPage.getNumber(),competitionPage.getTotalPages(),competitionPage.getTotalElements(),competitionPage.stream().map(CompetitionResponseDTO::fromCompetition).toList(),competitionPage.getSize()));
     }
 
     @PutMapping("/{id}")
