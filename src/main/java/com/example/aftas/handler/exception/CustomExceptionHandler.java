@@ -21,5 +21,9 @@ public class CustomExceptionHandler {
                 collect(Collectors.groupingBy(FieldError::getField, Collectors.mapping(FieldError::getDefaultMessage, Collectors.toList())));
         return ResponseEntity.badRequest().body(errors);
     }
+    @ExceptionHandler(CustomException.class)
+    public ResponseEntity handleCustomException(CustomException ex){
+        return new ResponseEntity<>(ex.getMessage(), ex.getHttpStatus());
+    }
 
 }
