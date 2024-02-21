@@ -10,7 +10,9 @@ import com.example.aftas.repository.auth.RoleRepository;
 import com.example.aftas.service.auth.AuthorityService;
 import com.example.aftas.service.auth.RoleService;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Component
@@ -28,42 +30,63 @@ public class RoleSeeder implements CommandLineRunner {
     }
 
     private void seedRoles() {
-        //? create authorities
+        //? authorities for Member
+        Authority viewCompetitionsList = authorityService.getByName(AuthorityEnum.VIEW_COMPETITIONS_LIST)
+                .orElseThrow(() -> new RuntimeException("VIEW_COMPETITIONS_LIST authority not found"));
+
+        Authority checkParticipations = authorityService.getByName(AuthorityEnum.CHECK_PARTICIPATIONS)
+                .orElseThrow(() -> new RuntimeException("CHECK_PARTICIPATIONS authority not found"));
+
+        Authority accessPodiumInformation = authorityService.getByName(AuthorityEnum.ACCESS_PODIUM_INFORMATION)
+                .orElseThrow(() -> new RuntimeException("ACCESS_PODIUM_INFORMATION authority not found"));
+
+        //? authorities for Jury
+        Authority manageCompetitions = authorityService.getByName(AuthorityEnum.MANAGE_COMPETITIONS)
+                .orElseThrow(() -> new RuntimeException("MANAGE_COMPETITIONS authority not found"));
+
+        Authority organizeCompetitionTasks = authorityService.getByName(AuthorityEnum.ORGANIZE_COMPETITION_TASKS)
+                .orElseThrow(() -> new RuntimeException("ORGANIZE_COMPETITION_TASKS authority not found"));
+
+        Authority evaluateCompetition = authorityService.getByName(AuthorityEnum.EVALUATE_COMPETITION)
+                .orElseThrow(() -> new RuntimeException("EVALUATE_COMPETITION authority not found"));
+
         Authority viewRoles = authorityService.getByName(AuthorityEnum.VIEW_ROLES)
                 .orElseThrow(() -> new RuntimeException("VIEW_ROLES authority not found"));
 
-        Authority createRole = authorityService.getByName(AuthorityEnum.CREATE_ROLE)
-                .orElseThrow(() -> new RuntimeException("CREATE_ROLE authority not found"));
-
         Authority viewUsers = authorityService.getByName(AuthorityEnum.VIEW_USERS)
                 .orElseThrow(() -> new RuntimeException("VIEW_USERS authority not found"));
-        Authority grantAuthorityToRole = authorityService.getByName(AuthorityEnum.GRANT_AUTHORITY_TO_ROLE)
-                .orElseThrow(() -> new RuntimeException("GRANT_AUTHORITY_TO_ROLE authority not found"));
-        Authority revokeAuthorityFromRole = authorityService.getByName(AuthorityEnum.REVOKE_AUTHORITY_FROM_ROLE)
-                .orElseThrow(() -> new RuntimeException("REVOKE_AUTHORITY_FROM_ROLE authority not found"));
 
-        Authority deleteRole = authorityService.getByName(AuthorityEnum.DELETE_ROLE)
-                .orElseThrow(() -> new RuntimeException("DELETE_ROLE authority not found"));
 
         //? Create roles and associate authorities
         Role userRole = Role.builder()
-                .name("USER")
+                .name("MEMBER")
                 .isDefault(true)
+                .authorities(Arrays.asList(viewCompetitionsList, checkParticipations, accessPodiumInformation))
                 .build();
 
-        Role adminRole = Role.builder()
-                .name("ADMIN")
-                .authorities(Arrays.asList(viewRoles, viewUsers))
+        Role juryRole = Role.builder()
+                .name("JURY")
+                .authorities(Arrays.asList(manageCompetitions, organizeCompetitionTasks, evaluateCompetition, viewRoles, viewUsers))
                 .build();
 
-        Role superAdminRole = Role.builder()
-                .name("SUPER_ADMIN")
-                .authorities(Arrays.asList(viewRoles, createRole, grantAuthorityToRole, revokeAuthorityFromRole, viewUsers, deleteRole))
+        Role managerRole = Role.builder()
+                .name("MANAGER")
+                .authorities(getAllAuthorities())
                 .build();
 
         roleService.save(userRole, true);
-        roleService.save(adminRole, true);
-        roleService.save(superAdminRole, true);
+        roleService.save(juryRole, true);
+        roleService.save(managerRole, true);
+    }
+
+    private List<Authority> getAllAuthorities() {
+        List<Authority> authorities = new ArrayList<>();
+        for (AuthorityEnum authorityEnum : AuthorityEnum.values()) {
+            Authority authority = authorityService.getByName(authorityEnum)
+                    .orElseThrow(() -> new RuntimeException(authorityEnum + " authority not found"));
+            authorities.add(authority);
+        }
+        return authorities;
     }
 
 }

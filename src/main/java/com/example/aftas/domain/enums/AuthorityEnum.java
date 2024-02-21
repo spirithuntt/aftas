@@ -12,6 +12,21 @@ public enum AuthorityEnum {
     UPDATE_USERS,
     VIEW_USERS,
     DELETE_USERS,
-    VIEW_AUTHORITIES
+    VIEW_AUTHORITIES,
+
+    // authorities for Member
+    VIEW_COMPETITIONS_LIST,
+    CHECK_PARTICIPATIONS,
+    ACCESS_PODIUM_INFORMATION,
+
+    // authorities for Jury
+    MANAGE_COMPETITIONS,
+    ORGANIZE_COMPETITION_TASKS,
+    EVALUATE_COMPETITION,
+
+    // authorities for Manager
+    MANAGE_USERS_ACCOUNTS,
+    MANAGE_USERS_ACTIONS,
+    MANAGE_OTHER_USERS_ROLES
 
 }
