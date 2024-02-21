@@ -19,7 +19,7 @@ public class Ranking {
     @EmbeddedId
     private RankId id;
 
-    @Column(columnDefinition = "integer default 0")
+    @Column(columnDefinition = "integer default 0", name = "`rank`")
     private Integer rank;
 
     @Column(columnDefinition = "integer default 0")

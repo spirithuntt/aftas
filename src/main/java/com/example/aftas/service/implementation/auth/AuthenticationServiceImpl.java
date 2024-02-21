@@ -1,11 +1,11 @@
 package com.example.aftas.service.implementation.auth;
 
+import com.example.aftas.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.example.aftas.domain.User;
 import com.example.aftas.dto.requests.auth.AuthenticationRequest;
 import com.example.aftas.dto.requests.auth.RegisterRequest;
 import com.example.aftas.dto.responses.auth.AuthenticationResponse;
@@ -25,7 +25,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationResponse register(RegisterRequest request) {
-        var user = User.builder()
+        var user = Member.builder()
                 .name(request.getName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
