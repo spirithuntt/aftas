@@ -66,7 +66,7 @@ public class RoleSeeder implements CommandLineRunner {
 
         Role juryRole = Role.builder()
                 .name("JURY")
-                .authorities(Arrays.asList(manageCompetitions, organizeCompetitionTasks, evaluateCompetition, viewRoles, viewUsers))
+                .authorities(Arrays.asList(manageCompetitions, organizeCompetitionTasks, evaluateCompetition, viewRoles, viewUsers, viewCompetitionsList, checkParticipations, accessPodiumInformation))
                 .build();
 
         Role managerRole = Role.builder()

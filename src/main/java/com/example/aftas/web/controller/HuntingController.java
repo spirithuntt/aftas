@@ -9,6 +9,7 @@ import com.example.aftas.service.HuntingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class HuntingController {
 
     private final HuntingService huntingService;
 
+    @PreAuthorize("(hasAnyAuthority('VIEW_HUNTING_RESULTS'))")
     @GetMapping
     public ResponseEntity getAll(){
         List<Hunting> hunts = huntingService.getAll();
@@ -27,6 +29,7 @@ public class HuntingController {
         else return ResponseMessage.ok("Hunts fetched successfully", hunts.stream().map(HuntingResponseDTO::fromHunting).toList());
     }
 
+    @PreAuthorize("(hasAnyAuthority('VIEW_HUNTING_RESULTS'))")
     @GetMapping("/{id}")
     public ResponseEntity getHuntingById(@PathVariable Long id){
         Hunting hunting = huntingService.getById(id);
@@ -34,6 +37,7 @@ public class HuntingController {
         else return ResponseMessage.ok("Success", HuntingResponseDTO.fromHunting(hunting));
     }
 
+    @PreAuthorize("(hasAnyAuthority('VIEW_HUNTING_RESULTS'))")
     @GetMapping("/member/{member}")
     public ResponseEntity getHuntingByMember(@PathVariable Integer member){
         List<Hunting> hunts = huntingService.getByMember(member);
@@ -41,6 +45,7 @@ public class HuntingController {
         else return ResponseMessage.ok("Success", hunts.stream().map(HuntingResponseDTO::fromHunting).toList());
     }
 
+    @PreAuthorize("(hasAnyAuthority('VIEW_HUNTING_RESULTS'))")
     @GetMapping("/competition/{competition}")
     public ResponseEntity getHuntingByCompetition(@PathVariable String competition){
         List<Hunting> hunts = huntingService.getByCompetition(competition);
@@ -48,6 +53,7 @@ public class HuntingController {
         else return ResponseMessage.ok("Success", hunts.stream().map(HuntingResponseDTO::fromHunting).toList());
     }
 
+    @PreAuthorize("(hasAnyAuthority('VIEW_HUNTING_RESULTS'))")
     @GetMapping("/competition_and_member/{competition}/{member}")
     public ResponseEntity getHuntingByCompetitionAndMember(@PathVariable String competition, @PathVariable Integer member){
         List<Hunting> hunts = huntingService.getByCompetitionAndMember(competition, member);
@@ -55,20 +61,21 @@ public class HuntingController {
         else return ResponseMessage.ok("Success", hunts.stream().map(HuntingResponseDTO::fromHunting).toList());
     }
 
+    @PreAuthorize("hasAnyAuthority('EVALUATE_COMPETITION')")
     @PostMapping
     public ResponseEntity save(@RequestBody @Valid HuntingRequestDTO hunting){
         Hunting hunting1 = huntingService.save(hunting.toHunting(), hunting.weight());
         if (hunting1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Hunting created successfully", HuntingResponseDTO.fromHunting(hunting1));
     }
-
+    @PreAuthorize("hasAnyAuthority('EVALUATE_COMPETITION')")
     @PutMapping("/{id}")
     public ResponseEntity update(@RequestBody UpdateHuntingRequestDTO hunting, @PathVariable Long id){
         Hunting hunting1 = huntingService.update(hunting.toHunting(), id);
         if (hunting1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Hunting updated successfully", HuntingResponseDTO.fromHunting(hunting1));
     }
-
+    @PreAuthorize("hasAnyAuthority('EVALUATE_COMPETITION')")
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id){
         Hunting hunting = huntingService.getById(id);

@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -63,7 +64,6 @@ public class Member implements UserDetails {
     private Date updatedAt;
 
 
-
     //++++
     private String email;
     private String password;
@@ -75,7 +75,10 @@ public class Member implements UserDetails {
     //++++
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return role.getAuthorities().stream().map(authority -> new SimpleGrantedAuthority(authority.getName().name())).toList();
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+        authorities.addAll(role.getAuthorities().stream().map(authority -> new SimpleGrantedAuthority(authority.getName().name())).toList());
+        return authorities;
     }
 
     @Override

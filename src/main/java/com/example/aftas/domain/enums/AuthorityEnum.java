@@ -23,10 +23,17 @@ public enum AuthorityEnum {
     MANAGE_COMPETITIONS,
     ORGANIZE_COMPETITION_TASKS,
     EVALUATE_COMPETITION,
+    VIEW_HUNTING_RESULTS,
 
     // authorities for Manager
     MANAGE_USERS_ACCOUNTS,
     MANAGE_USERS_ACTIONS,
-    MANAGE_OTHER_USERS_ROLES
+    MANAGE_OTHER_USERS_ROLES,
+
+    //other authorities
+
+
+
+
 
 }

@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import jdk.jfr.MemoryAddress;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    @PreAuthorize("(hasAnyAuthority('CHECK_PARTICIPATIONS'))")
     @GetMapping
     public ResponseEntity getAll(){
         List<Member> members = memberService.getAll();
@@ -27,6 +29,7 @@ public class MemberController {
         else return ResponseMessage.ok("Members fetched successfully", members.stream().map(MemberResponseDTO::fromMember).toList());
     }
 
+    @PreAuthorize("(hasAnyAuthority('CHECK_PARTICIPATIONS'))")
     @GetMapping("/{id}")
     public ResponseEntity getMemberById(@PathVariable Long id){
         Member member = memberService.getById(id);
@@ -34,6 +37,7 @@ public class MemberController {
         else return ResponseMessage.ok("Success", MemberResponseDTO.fromMember(member));
     }
 
+    @PreAuthorize("(hasAnyAuthority('CHECK_PARTICIPATIONS'))")
     @GetMapping("/name/{name}")
     public ResponseEntity getMemberByName(@PathVariable String name){
         List<Member> members = memberService.getByName(name);
@@ -41,6 +45,7 @@ public class MemberController {
         else return ResponseMessage.ok("Success", members.stream().map(MemberResponseDTO::fromMember).toList());
     }
 
+    @PreAuthorize("(hasAnyAuthority('CHECK_PARTICIPATIONS'))")
     @GetMapping("/identity_number/{identityNumber}")
     public ResponseEntity getMemberByIdentityNumber(@PathVariable String identityNumber){
         List<Member> members = memberService.getByIdentityNumber(identityNumber);
@@ -48,6 +53,7 @@ public class MemberController {
         else return ResponseMessage.ok("Success", members.stream().map(MemberResponseDTO::fromMember).toList());
     }
 
+    @PreAuthorize("(hasAnyAuthority('CHECK_PARTICIPATIONS'))")
     @GetMapping("/search/{searchParam}")
     public ResponseEntity getMemberByNameOrFamilyNameOrNumber(@PathVariable String searchParam){
         List<Member> members = memberService.getByNameOrFamilyNameOrNumber(searchParam);
@@ -55,20 +61,21 @@ public class MemberController {
         else return ResponseMessage.ok("Success", members.stream().map(MemberResponseDTO::fromMember).toList());
     }
 
+    @PreAuthorize("hasAnyAuthority('MANAGE_USERS_ACCOUNTS')")
     @PostMapping
     public ResponseEntity save(@RequestBody @Valid MemberRequestDTO member){
         Member member1 = memberService.save(member.toMember());
         if (member1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Member created successfully", MemberResponseDTO.fromMember(member1));
     }
-
+    @PreAuthorize("hasAnyAuthority('MANAGE_USERS_ACCOUNTS')")
     @PutMapping("/{id}")
     public ResponseEntity update(@RequestBody @Valid MemberRequestDTO member, @PathVariable Long id){
         Member member1 = memberService.update(member.toMember(), id);
         if (member1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Member updated successfully", MemberResponseDTO.fromMember(member1));
     }
-
+    @PreAuthorize("hasAnyAuthority('MANAGE_USERS_ACCOUNTS')")
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id){
         Member member = memberService.getById(id);

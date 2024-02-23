@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,20 +24,21 @@ public class CompetitionController {
 
     private final CompetitionService competitionService;
 
+    @PreAuthorize("hasAnyAuthority('VIEW_COMPETITIONS_LIST')")
     @GetMapping
     public ResponseEntity getAll(){
         List<Competition> competitions = competitionService.getAll();
         if (competitions.isEmpty()) return ResponseMessage.notFound("No competition was found");
         else return ResponseMessage.ok("Competitions fetched successfully", competitions.stream().map(CompetitionResponseDTO::fromCompetition).toList());
     }
-
+    @PreAuthorize("hasAnyAuthority('VIEW_COMPETITIONS_LIST')")
     @GetMapping("/{id}")
     public ResponseEntity getCompetitionById(@PathVariable Long id){
         Competition competition = competitionService.getById(id);
         if(competition == null) return ResponseMessage.notFound("Competition not found");
         else return ResponseMessage.ok("Success", CompetitionResponseDTO.fromCompetition(competition));
     }
-
+    @PreAuthorize("hasAnyAuthority('VIEW_COMPETITIONS_LIST')")
     @GetMapping("/code/{code}")
     public ResponseEntity getCompetitionByCode(@PathVariable String code){
         Competition competition = competitionService.getByCode(code);
@@ -44,13 +46,14 @@ public class CompetitionController {
         else return ResponseMessage.ok("Success", CompetitionResponseDTO.fromCompetition(competition));
     }
 
+    @PreAuthorize("hasAnyAuthority('MANAGE_COMPETITIONS')")
     @PostMapping
     public ResponseEntity save(@RequestBody @Valid CompetitionRequestDTO competition){
         Competition competition1 = competitionService.save(competition.toCompetition());
         if (competition1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Competition created successfully", CompetitionResponseDTO.fromCompetition(competition1));
     }
-
+    @PreAuthorize("hasAnyAuthority('VIEW_COMPETITIONS_LIST')")
     @PostMapping("/page")
     public ResponseEntity getAllCompetitions(@RequestParam(defaultValue = "0") int page , @RequestParam(defaultValue = "8") int size){
         Pageable paginating = PageRequest.of(page,size);
@@ -59,14 +62,14 @@ public class CompetitionController {
         if (competitionPage == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Competition created successfully", new PaginationResponseDTO(competitionPage.getNumber(),competitionPage.getTotalPages(),competitionPage.getTotalElements(),competitionPage.stream().map(CompetitionResponseDTO::fromCompetition).toList(),competitionPage.getSize()));
     }
-
+    @PreAuthorize("hasAnyAuthority('MANAGE_COMPETITIONS')")
     @PutMapping("/{id}")
     public ResponseEntity update(@RequestBody @Valid CompetitionRequestDTO competition, @PathVariable Long id){
         Competition competition1 = competitionService.update(competition.toCompetition(), id);
         if (competition1 == null) return ResponseMessage.badRequest("bad request");
         else return ResponseMessage.created("Competition updated successfully", CompetitionResponseDTO.fromCompetition(competition1));
     }
-
+    @PreAuthorize("hasAnyAuthority('MANAGE_COMPETITIONS')")
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id){
         Competition competition = competitionService.getById(id);

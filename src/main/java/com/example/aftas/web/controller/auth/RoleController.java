@@ -3,6 +3,7 @@ package com.example.aftas.web.controller.auth;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import com.example.aftas.domain.Role;
 import com.example.aftas.dto.requests.auth.GrantAuthoritiesRequestDto;
@@ -36,6 +37,7 @@ public class RoleController {
         else return new ResponseEntity<>(RoleResponseDTO.fromRole(role), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyAuthority('GRANT_AUTHORITY_TO_ROLE')")
     @PutMapping("/grant_authorities")
     public ResponseEntity<RoleResponseDTO> grantAuthorities(@RequestBody GrantAuthoritiesRequestDto rolesAuthorities) {
         Role role = roleService.grantAuthorities(rolesAuthorities.getAuthorityId(), rolesAuthorities.getRoleId());
@@ -44,6 +46,7 @@ public class RoleController {
         } else return new ResponseEntity<>(RoleResponseDTO.fromRole(role), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyAuthority('REVOKE_AUTHORITY_FROM_ROLE')")
     @PutMapping("/revoke_authorities")
     public ResponseEntity<RoleResponseDTO> revokeAuthorities(@RequestBody GrantAuthoritiesRequestDto rolesAuthorities) {
         Role role = roleService.revokeAuthorities(rolesAuthorities.getAuthorityId(), rolesAuthorities.getRoleId());
@@ -52,6 +55,7 @@ public class RoleController {
     }
 
     //grant role to user
+    @PreAuthorize("hasAnyAuthority('ASSIGN_ROLE_TO_USER')")
     @PostMapping("/grant_role_to_user")
     public ResponseEntity<RoleResponseDTO> grantRoleToUser(@RequestBody GrantRoleToUserRequestDto grantRoleToUserRequestDto) {
         Role role = userService.grantRoleToUser(grantRoleToUserRequestDto.getUserId(), grantRoleToUserRequestDto.getRoleId());
@@ -63,6 +67,7 @@ public class RoleController {
         }
     }
 
+    @PreAuthorize("hasAnyAuthority('DELETE_ROLE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         if (roleService.getById(id).isPresent()) {

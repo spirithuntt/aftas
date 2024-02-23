@@ -10,6 +10,7 @@ import com.example.aftas.handler.response.ResponseMessage;
 import com.example.aftas.service.RankingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class RankingController {
 
     private final RankingService rankingService;
 
+    @PreAuthorize("(hasAnyAuthority('ACCESS_PODIUM_INFORMATION'))")
     @GetMapping
     public ResponseEntity getAll(){
         List<Ranking> rankings = rankingService.getAll();
@@ -28,6 +30,7 @@ public class RankingController {
         else return ResponseMessage.ok("Rankings fetched successfully", rankings.stream().map(RankingResponseDTO::fromRanking).toList());
     }
 
+    @PreAuthorize("(hasAnyAuthority('ACCESS_PODIUM_INFORMATION'))")
     @GetMapping("/{id}")
     public ResponseEntity getRankingById(@PathVariable RankId id){
         Ranking ranking = rankingService.getById(id);
@@ -35,6 +38,7 @@ public class RankingController {
         else return ResponseMessage.ok("Success", RankingResponseDTO.fromRanking(ranking));
     }
 
+    @PreAuthorize("(hasAnyAuthority('ACCESS_PODIUM_INFORMATION'))")
     @GetMapping("member/{member}")
     public ResponseEntity getRankingByMember(@PathVariable Integer member){
         List<Ranking> rankings = rankingService.getByMember(member);
@@ -42,6 +46,7 @@ public class RankingController {
         else return ResponseMessage.ok("Success", rankings.stream().map(RankingResponseDTO::fromRanking).toList());
     }
 
+    @PreAuthorize("(hasAnyAuthority('ACCESS_PODIUM_INFORMATION'))")
     @GetMapping("competition/{competition}")
     public ResponseEntity getRankingByCompetition(@PathVariable String competition){
         List<Ranking> rankings = rankingService.sortParticipantsByScore(competition);
@@ -49,6 +54,7 @@ public class RankingController {
         else return ResponseMessage.ok("Success", rankings.stream().map(RankingResponseDTO::fromRanking).toList());
     }
 
+    @PreAuthorize("(hasAnyAuthority('ACCESS_PODIUM_INFORMATION'))")
     @GetMapping("member_and_competition/{member}/{competition}")
     public ResponseEntity getRankingByMemberAndCompetition(@PathVariable Integer member, @PathVariable String competition){
         Ranking ranking = rankingService.getByMemberAndCompetition(member, competition);
@@ -56,6 +62,7 @@ public class RankingController {
         else return ResponseMessage.ok("Success", RankingResponseDTO.fromRanking(ranking));
     }
 
+    @PreAuthorize("hasAnyAuthority('EVALUATE_COMPETITION')")
     @PostMapping
     public ResponseEntity save(@RequestBody RegisterMemberRequestDTO ranking){
         Ranking ranking1 = rankingService.save(ranking.toRanking());
@@ -63,6 +70,7 @@ public class RankingController {
         else return ResponseMessage.created("Ranking created successfully", RankingResponseDTO.fromRanking(ranking1));
     }
 
+    @PreAuthorize("hasAnyAuthority('EVALUATE_COMPETITION')")
     @PutMapping("/{id}")
     public ResponseEntity update(@RequestBody RegisterMemberRequestDTO ranking){
         Ranking ranking1 = rankingService.update(ranking.toRanking());
@@ -70,6 +78,7 @@ public class RankingController {
         else return ResponseMessage.created("Ranking updated successfully", RankingResponseDTO.fromRanking(ranking1));
     }
 
+    @PreAuthorize("hasAnyAuthority('EVALUATE_COMPETITION')")
     @DeleteMapping("/{competition}/{member}")
     public ResponseEntity delete(@PathVariable("competition") Long competition, @PathVariable("member") Long member){
         Ranking ranking=new Ranking();
