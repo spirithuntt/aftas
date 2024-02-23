@@ -21,7 +21,7 @@ public class HuntingController {
 
     private final HuntingService huntingService;
 
-    @PreAuthorize("(hasAnyAuthority('VIEW_HUNTING_RESULTS'))")
+    @PreAuthorize("(hasAnyAuthority('ACCESS_PODIUM_INFORMATION'))")
     @GetMapping
     public ResponseEntity getAll(){
         List<Hunting> hunts = huntingService.getAll();
@@ -29,7 +29,7 @@ public class HuntingController {
         else return ResponseMessage.ok("Hunts fetched successfully", hunts.stream().map(HuntingResponseDTO::fromHunting).toList());
     }
 
-    @PreAuthorize("(hasAnyAuthority('VIEW_HUNTING_RESULTS'))")
+    @PreAuthorize("(hasAnyAuthority('ACCESS_PODIUM_INFORMATION'))")
     @GetMapping("/{id}")
     public ResponseEntity getHuntingById(@PathVariable Long id){
         Hunting hunting = huntingService.getById(id);
@@ -37,7 +37,7 @@ public class HuntingController {
         else return ResponseMessage.ok("Success", HuntingResponseDTO.fromHunting(hunting));
     }
 
-    @PreAuthorize("(hasAnyAuthority('VIEW_HUNTING_RESULTS'))")
+    @PreAuthorize("(hasAnyAuthority('ACCESS_PODIUM_INFORMATION'))")
     @GetMapping("/member/{member}")
     public ResponseEntity getHuntingByMember(@PathVariable Integer member){
         List<Hunting> hunts = huntingService.getByMember(member);
@@ -45,7 +45,7 @@ public class HuntingController {
         else return ResponseMessage.ok("Success", hunts.stream().map(HuntingResponseDTO::fromHunting).toList());
     }
 
-    @PreAuthorize("(hasAnyAuthority('VIEW_HUNTING_RESULTS'))")
+    @PreAuthorize("(hasAnyAuthority('ACCESS_PODIUM_INFORMATION'))")
     @GetMapping("/competition/{competition}")
     public ResponseEntity getHuntingByCompetition(@PathVariable String competition){
         List<Hunting> hunts = huntingService.getByCompetition(competition);
@@ -53,7 +53,7 @@ public class HuntingController {
         else return ResponseMessage.ok("Success", hunts.stream().map(HuntingResponseDTO::fromHunting).toList());
     }
 
-    @PreAuthorize("(hasAnyAuthority('VIEW_HUNTING_RESULTS'))")
+    @PreAuthorize("(hasAnyAuthority('ACCESS_PODIUM_INFORMATION'))")
     @GetMapping("/competition_and_member/{competition}/{member}")
     public ResponseEntity getHuntingByCompetitionAndMember(@PathVariable String competition, @PathVariable Integer member){
         List<Hunting> hunts = huntingService.getByCompetitionAndMember(competition, member);
