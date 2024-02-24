@@ -24,6 +24,7 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
+
     //!its a generic method to extract any information from the token
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
         final Claims claims = extractAllClaims(token);
@@ -51,6 +52,7 @@ public class JwtService {
         final String username = extractUserName(token);
         return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
+
 
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());

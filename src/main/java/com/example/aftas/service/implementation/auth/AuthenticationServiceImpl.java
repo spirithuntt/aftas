@@ -1,6 +1,7 @@
 package com.example.aftas.service.implementation.auth;
 
 import com.example.aftas.domain.Member;
+import com.example.aftas.service.auth.RefreshTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,6 +23,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final RoleService roleService;
+    private final RefreshTokenService refreshTokenService;
 
     @Override
     public AuthenticationResponse register(RegisterRequest request) {
@@ -43,8 +45,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         );
         var user = userRepository.findByEmail(request.getEmail()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
+        var refreshToken = refreshTokenService.createRefreshToken(user.getEmail());
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .refreshToken(refreshToken.getToken())
                 .name(user.getName())
                 .email(user.getEmail())
                 .role(user.getRole())
