@@ -14,6 +14,9 @@ import com.example.aftas.repository.auth.UserRepository;
 import com.example.aftas.security.JwtService;
 import com.example.aftas.service.auth.AuthenticationService;
 import com.example.aftas.service.auth.RoleService;
+
+import java.util.Random;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -27,19 +30,31 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationResponse register(RegisterRequest request) {
+        Random random = new Random();
+        long randomNumber;
+        boolean numberExists;
+
+        do {
+            randomNumber = random.nextInt(10000); // Generate a random number up to 10000
+            numberExists = userRepository.existsById(randomNumber); // Check if the number already exists
+        } while (numberExists); // if it does generate another number
+
         var user = Member.builder()
                 .name(request.getName())
+                .number((int) randomNumber)
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(roleService.findDefaultRole().orElse(null))
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder().token(jwtToken).build();
+        var refreshToken = refreshTokenService.createRefreshToken(user.getEmail());
+        return AuthenticationResponse.builder().token(jwtToken).refreshToken(refreshToken.getToken()).name(user.getName()).email(user.getEmail()).role(user.getRole()).build();
     }
 
     @Override
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        System.out.println(request);
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );

@@ -11,4 +11,6 @@ public interface UserService {
     Optional<Member> getById(Long id);
 
     Role grantRoleToUser(Long userId, Long roleId);
+
+    void unlockAccount(Long userId);
 }

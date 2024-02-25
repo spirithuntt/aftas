@@ -34,17 +34,24 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     public RefreshToken createRefreshToken(String email){
         Member user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
-        RefreshToken refreshToken = RefreshToken.builder()
-                .userInfo(user)
-                .token(UUID.randomUUID().toString())
-                //?sets the expiration date to 10 minutes
-                .expiryDate(Instant.now().plusMillis(600000))
-                .build();
-        return refreshTokenRepository.save(refreshToken);
+        Optional<RefreshToken> existingTokenOpt = refreshTokenRepository.findByUserInfo(user);
 
-
+        if (existingTokenOpt.isPresent()) {
+            //? if exists update the token and expiry date
+            RefreshToken existingToken = existingTokenOpt.get();
+            existingToken.setToken(UUID.randomUUID().toString());
+            existingToken.setExpiryDate(Instant.now().plusMillis(600000));
+            return refreshTokenRepository.save(existingToken);
+        } else {
+            //? if no create a new one
+            RefreshToken refreshToken = RefreshToken.builder()
+                    .userInfo(user)
+                    .token(UUID.randomUUID().toString())
+                    .expiryDate(Instant.now().plusMillis(600000))
+                    .build();
+            return refreshTokenRepository.save(refreshToken);
+        }
     }
-
     @Override
     public Optional<RefreshToken> findByToken(String token){
         return refreshTokenRepository.findByToken(token);

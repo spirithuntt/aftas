@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import com.example.aftas.domain.Role;
 import com.example.aftas.repository.auth.RoleRepository;
@@ -43,4 +44,11 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    @Override
+    public void unlockAccount(Long userId) {
+        Member member = userRepository.findById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        member.unlockAccount();
+        userRepository.save(member);
+    }
 }

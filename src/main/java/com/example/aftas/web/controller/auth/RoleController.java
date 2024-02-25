@@ -75,5 +75,12 @@ public class RoleController {
             return ResponseEntity.ok().build();
         } else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    @PreAuthorize("hasAnyAuthority('MANAGE_USERS_ACCOUNTS')")
+    @PutMapping("/unlock/{userId}")
+    public ResponseEntity<Void> unlockAccount(@PathVariable Long userId) {
+        userService.unlockAccount(userId);
+        return ResponseEntity.ok().build();
+    }
 }
 
