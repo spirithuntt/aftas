@@ -12,8 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -94,5 +96,21 @@ public class RankingServiceImpl implements RankingService {
     @Override
     public void delete(Ranking ranking) {
         rankingRepository.delete(ranking);
+    }
+
+
+    @Override
+    public List<Competition> getCompetitionsByMemberId(Long memberId) {
+        Member member = memberService.getById(memberId);
+        if (member == null) {
+            return Collections.emptyList();
+        }
+        List<Ranking> rankings = rankingRepository.getRankingByMemberId(member.getId());
+        if (rankings.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return rankings.stream()
+                .map(Ranking::getCompetition)
+                .collect(Collectors.toList());
     }
 }

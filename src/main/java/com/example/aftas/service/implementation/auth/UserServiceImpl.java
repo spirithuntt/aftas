@@ -45,9 +45,10 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void unlockAccount(Long userId) {
-        Member member = userRepository.findById(userId)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    public void unlockAccount(Integer number) {
+        Member member = userRepository.findByNumber(number);
+        System.out.println("testttt"+member);
+        if (member == null) throw new UsernameNotFoundException("User not found");
         member.unlockAccount();
         userRepository.save(member);
     }

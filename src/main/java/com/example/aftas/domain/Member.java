@@ -106,8 +106,7 @@ public class Member implements UserDetails {
     public void unlockAccount() {
         this.accountLocked = false;
     }
-
-
+    
     @Override
     public boolean isCredentialsNonExpired() {
         return true;

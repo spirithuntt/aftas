@@ -77,9 +77,10 @@ public class RoleController {
     }
 
     @PreAuthorize("hasAnyAuthority('MANAGE_USERS_ACCOUNTS')")
-    @PutMapping("/unlock/{userId}")
-    public ResponseEntity<Void> unlockAccount(@PathVariable Long userId) {
-        userService.unlockAccount(userId);
+    @PutMapping("/unlock/{number}")
+    public ResponseEntity<Void> unlockAccount(@PathVariable Integer number) {
+        System.out.println(number);
+        userService.unlockAccount(number);
         return ResponseEntity.ok().build();
     }
 }

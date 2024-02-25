@@ -12,5 +12,5 @@ public interface UserService {
 
     Role grantRoleToUser(Long userId, Long roleId);
 
-    void unlockAccount(Long userId);
+    void unlockAccount(Integer number);
 }

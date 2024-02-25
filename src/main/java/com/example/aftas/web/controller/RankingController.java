@@ -9,6 +9,7 @@ import com.example.aftas.dto.responses.RankingResponseDTO;
 import com.example.aftas.handler.response.ResponseMessage;
 import com.example.aftas.service.RankingService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -85,5 +86,15 @@ public class RankingController {
         ranking.setId(new RankId(member, competition));
         rankingService.delete(ranking);
         return ResponseMessage.ok("Ranking deleted successfully", RankingResponseDTO.fromRanking(ranking));
+    }
+
+    @PreAuthorize("hasAnyAuthority('ACCESS_PODIUM_INFORMATION')")
+    @GetMapping("/competitions/member/{memberId}")
+    public ResponseEntity<List<Competition>> getCompetitionsByMemberId(@PathVariable Long memberId) {
+        List<Competition> competitions = rankingService.getCompetitionsByMemberId(memberId);
+        if (competitions.isEmpty()) {
+            return ResponseMessage.badRequest("No competition found for member");
+        }
+        return ResponseMessage.ok("Success", competitions);
     }
 }

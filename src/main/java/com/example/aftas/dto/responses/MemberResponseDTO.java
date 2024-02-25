@@ -6,13 +6,15 @@ import com.example.aftas.domain.enums.IdentityDocumentType;
 import java.time.LocalDate;
 
 public record MemberResponseDTO(
+
     Integer number,
     String name,
     String familyName,
     LocalDate accessionDate,
     String nationality,
     IdentityDocumentType identityDocumentType,
-    String identityNumber
+    String identityNumber,
+    Boolean accountLocked
 ) {
     public static MemberResponseDTO fromMember(Member member){
         return new MemberResponseDTO(
@@ -22,7 +24,8 @@ public record MemberResponseDTO(
                 member.getAccessionDate(),
                 member.getNationality(),
                 member.getIdentityDocumentType(),
-                member.getIdentityNumber()
+                member.getIdentityNumber(),
+                member.isAccountLocked()
         );
     }
 }

@@ -29,4 +29,5 @@ public interface RankingService {
 
     void delete(Ranking ranking);
 
+    List<Competition> getCompetitionsByMemberId(Long memberId);
 }
