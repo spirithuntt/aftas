@@ -32,6 +32,8 @@ public class Member implements UserDetails {
 
     private String name;
 
+    private boolean accountLocked = true;
+
     private String familyName;
 
     private LocalDate accessionDate;
@@ -98,8 +100,13 @@ public class Member implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !accountLocked; // return the opposite of accountLocked
     }
+
+    public void unlockAccount() {
+        this.accountLocked = false;
+    }
+
 
     @Override
     public boolean isCredentialsNonExpired() {
