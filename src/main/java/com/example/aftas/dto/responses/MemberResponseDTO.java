@@ -25,7 +25,7 @@ public record MemberResponseDTO(
                 member.getNationality(),
                 member.getIdentityDocumentType(),
                 member.getIdentityNumber(),
-                member.isAccountLocked()
+                member.isAccountNotLocked()
         );
     }
 }

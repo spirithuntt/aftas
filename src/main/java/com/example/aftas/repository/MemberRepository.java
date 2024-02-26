@@ -28,4 +28,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
                     "OR name LIKE %:searchTerm% OR family_name LIKE %:searchTerm%", nativeQuery = true)
     List<Member> findByNumberOrFirstNameOrLastName(@Param("searchTerm") String searchTerm);
 
+
+    Member getByEmail(String email);
+
 }

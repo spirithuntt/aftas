@@ -113,4 +113,19 @@ public class RankingServiceImpl implements RankingService {
                 .map(Ranking::getCompetition)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<Competition> getRankingByMemberEmail(String email) {
+        Member member = memberService.getByEmail(email);
+        if (member == null) {
+            return Collections.emptyList();
+        }
+        List<Ranking> rankings = rankingRepository.getRankingByMemberId(member.getId());
+        if (rankings.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return rankings.stream()
+                .map(Ranking::getCompetition)
+                .collect(Collectors.toList());
+    }
 }

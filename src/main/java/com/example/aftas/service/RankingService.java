@@ -13,7 +13,7 @@ public interface RankingService {
 
     Ranking save(Ranking ranking);
 
-    List<Ranking>getAll();
+    List<Ranking> getAll();
 
     Ranking getById(RankId id);
 
@@ -30,4 +30,6 @@ public interface RankingService {
     void delete(Ranking ranking);
 
     List<Competition> getCompetitionsByMemberId(Long memberId);
+
+    List<Competition> getRankingByMemberEmail(String email);
 }

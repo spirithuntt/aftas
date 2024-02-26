@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -89,9 +91,10 @@ public class RankingController {
     }
 
     @PreAuthorize("hasAnyAuthority('ACCESS_PODIUM_INFORMATION')")
-    @GetMapping("/competitions/member/{memberId}")
-    public ResponseEntity<List<Competition>> getCompetitionsByMemberId(@PathVariable Long memberId) {
-        List<Competition> competitions = rankingService.getCompetitionsByMemberId(memberId);
+    @GetMapping("/competitions/member")
+    public ResponseEntity<List<Competition>> getCompetitionsByMemberId() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Competition> competitions = rankingService.getRankingByMemberEmail(userDetails.getUsername());
         if (competitions.isEmpty()) {
             return ResponseMessage.badRequest("No competition found for member");
         }

@@ -18,6 +18,7 @@ public interface RankingRepository extends JpaRepository<Ranking, RankId> {
 
     List<Ranking> getRankingByMemberId(Long memberId);
 
+    List<Ranking> getRankingByMemberEmail(String email);
     List<Ranking> getRankingByCompetition(Competition competition);
 
     Ranking getRankingByMemberAndCompetition(Member member, Competition competition);

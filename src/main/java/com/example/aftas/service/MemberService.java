@@ -26,4 +26,6 @@ public interface MemberService {
 
     List<Member> getByNameOrFamilyNameOrNumber(String searchParam);
 
+    Member getByEmail(String email);
+
 }

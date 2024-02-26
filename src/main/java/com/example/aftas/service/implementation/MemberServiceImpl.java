@@ -77,4 +77,9 @@ public class MemberServiceImpl implements MemberService {
     public List<Member> getByNameOrFamilyNameOrNumber(String searchParam) {
         return memberRepository.findByNumberOrFirstNameOrLastName(searchParam);
     }
+
+    @Override
+    public Member getByEmail(String email) {
+        return memberRepository.getByEmail(email);
+    }
 }

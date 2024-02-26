@@ -32,7 +32,7 @@ public class Member implements UserDetails {
 
     private String name;
 
-    private boolean accountLocked = true;
+    private boolean accountNotLocked = false;
 
     private String familyName;
 
@@ -100,13 +100,13 @@ public class Member implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return !accountLocked; // return the opposite of accountLocked
+        return accountNotLocked;
     }
 
     public void unlockAccount() {
-        this.accountLocked = false;
+        this.accountNotLocked = true;
     }
-    
+
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
